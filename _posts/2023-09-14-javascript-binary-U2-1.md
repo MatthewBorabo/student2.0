@@ -45,12 +45,12 @@ Jekyll Table Reference: https://idratherbewriting.com/documentation-theme-jekyll
     </thead>
     <tbody>
         <tr>
-            <td><div class="button" id="add1" onclick="add(1)">+1</div></td>
+            <td><div class="button" id="add5" onclick="add(5)">+5</div></td>
             <td id="binary">00000000</td>
             <td id="octal">0</td>
             <td id="hexadecimal">0</td>
             <td id="decimal">0</td>
-            <td><div class="button" id="sub1" onclick="add(-1)">-1</div></td>
+            <td><div class="button" id="sub5" onclick="add(-5)">-5</div></td>
         </tr>
     </tbody>
 </table>
