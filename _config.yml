@@ -1,14 +1,14 @@
-title: Teacher 2.0
-description: "August 2023 to June 2024"
-owner_name: John Mortensen
-github_username: jm1021
+title: Student 2.0
+description: "November 2023 to March 2024"
+owner_name: Matthew Sean Borabo
+github_username: MatthewBorabo
 github_repo: "teacher_portfolio"
 baseurl: "/teacher_portfolio"
 future: true
 remote_theme: jekyll/minima
 minima:
   social_links:
-    - { platform: github, user_url: "https://github.com/nighthawkcoders/teacher_portfolio"}
+    - { platform: github, user_url: "https://github.com/MatthewBorabo/teacher_portfolio"}
     - { platform: x, user_url: "https://x.com/NighthawkCoding/" }
     - { platform: youtube, user_url: "https://www.youtube.com/@nighthawkcodingsociety2868" }      
 # remote_theme: pages-themes/dinky@v0.2.0
