@@ -4,4 +4,5 @@ title: About Us
 permalink: /about/
 ---
 
-Creators of Alien World
+# Student2.0 Website
+- Owned By: Matthew Sean Borabo

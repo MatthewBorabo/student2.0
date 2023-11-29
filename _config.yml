@@ -2,8 +2,8 @@ title: Student 2.0
 description: "November 2023 to March 2024"
 owner_name: Matthew Sean Borabo
 github_username: MatthewBorabo
-github_repo: "teacher_portfolio"
-baseurl: "/teacher_portfolio"
+github_repo: "student2.0"
+baseurl: "/student2.0"
 future: true
 remote_theme: jekyll/minima
 minima:
