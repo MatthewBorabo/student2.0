@@ -4,4 +4,5 @@ title: About Us
 permalink: /about/
 ---
 
-Creators of Alien World
+Creators of this Repository:
+Matthew Sean Borabo
