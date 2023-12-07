@@ -1,4 +1,4 @@
---
+---
 layout: post
 title: Week 1-2 Cleanup
 description: Fixing my personal repo to be up to standard with the group-shared one.
