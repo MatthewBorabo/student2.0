@@ -20,3 +20,4 @@ So I'm behind since I haven't updated my repo to be like the group one. I need t
 
 # Estimated Time: 5 Hours
 - Wish me luck! Matthew (12/6)
+- Update: 9:18 PM (12/6) I cleaned-up the files! Woooo. Time for the goomba >:)
