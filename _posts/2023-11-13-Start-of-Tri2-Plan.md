@@ -3,7 +3,7 @@ layout: post
 title: Plan to a New Trimester!
 description: Adjust to the new trimester, learn how to modify a mario game, make a new student respository, and hang out with other CSSE students that were not in my original class. 
 courses: { csse: {week: 13} }
-type: ccc
+type: devops
 ---
 
 ## START OF A NEW TRIMESTER
