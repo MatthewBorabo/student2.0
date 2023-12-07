@@ -1,117 +1,177 @@
-import GameEnv from './GameEnv.js';
-import GameObject from './GameObject.js';
+---
+hide: true
+layout: base
+image: /images/alien_planet.jpg
+images:
+  background:
+    src: /images/alien_planet2.jpg
+  platform:
+    src: /images/platform.png
+  dog:
+    src: /images/dogSprite.png
+  monkey:
+    src: /images/monkeySprite.png
+  vader:
+    src: /images/vaderSprite.png
+---
+<!-- Liquid code, run by Jekyll, used to define location of asset(s) -->
+{% assign backgroundFile = site.baseurl | append: page.images.background.src %}
+{% assign platformFile = site.baseurl | append: page.images.platform.src %}
+{% assign dogSpriteImage = site.baseurl | append: page.images.dog.src %}
+{% assign monkeySpriteImage = site.baseurl | append: page.images.monkey.src %}
+{% assign vaderSpriteImage = site.baseurl | append: page.images.vader.src %}
 
-class Character extends GameObject {
-    constructor(canvas, image, speedRatio,
-        spriteWidth, spriteHeight, spriteScale) {
-                var characterArray = [];
-        super(canvas, image, speedRatio);
-        this.spriteWidth = spriteWidth;
-        this.spriteHeight = spriteHeight;
-        this.spriteScale = spriteScale;
-        this.minFrame = 0;
-        this.maxFrame = 0;
-        this.frameX = 0;  // Default X frame of the animation
-        this.frameY = 0;  // Default Y frame of the animation
-        this.collisionWidth = spriteWidth * spriteScale;
-        this.collisionHeight = spriteHeight * spriteScale;
-        this.gravityEnabled = true;
+<style>
+    #controls {
+        position: relative;
+        z-index: 2; /* Ensure the controls are on top */
+    }
+</style>
+
+<!-- Prepare DOM elements -->
+<!-- Wrap both the dog canvas and controls in a container div -->
+<div id="canvasContainer">
+    <div id="controls"> <!-- Controls -->
+        <!-- Background controls -->
+        <button id="toggleCanvasEffect">Invert</button>
+        <!-- Dog controls -->
+        <input type="radio" name="animation" id="idle">
+        <label for="idle">Idle</label>
+        <input type="radio" name="animation" id="barking">
+        <label for="barking">Barking</label>
+        <input type="radio" name="animation" id="walking" checked>
+        <label for="walking">Walking</label>
+    </div>
+</div>
+
+<script type="module">
+    import GameEnv from '{{site.baseurl}}/assets/js/alienWorld/GameEnv.js';
+    import GameObject from '{{site.baseurl}}/assets/js/alienWorld/GameObject.js';
+    import Background from '{{site.baseurl}}/assets/js/alienWorld/Background.js';
+    import Character from '{{site.baseurl}}/assets/js/alienWorld/Character.js';
+    import { initPlatform } from '{{site.baseurl}}/assets/js/alienWorld/Platform.js';
+    import { initDog } from '{{site.baseurl}}/assets/js/alienWorld/CharacterDog.js';
+    import { initMonkey } from '{{site.baseurl}}/assets/js/alienWorld/CharacterMonkey.js';
+    import { initVader } from '{{site.baseurl}}/assets/js/alienWorld/CharacterVader.js';
+
+    // Create a function to load an image and return a Promise
+    async function loadImage(src) {
+        return new Promise((resolve, reject) => {
+        const image = new Image();
+        image.src = src;
+        image.onload = () => resolve(image);
+        image.onerror = reject;
+        });
     }
 
-    getMinFrame(){
-        return this.manFrame;
+    // Game loop
+    function gameLoop() {
+        for (var gameObj of GameObject.gameObjectArray){
+            gameObj.update();
+            gameObj.draw();
+        }
+        requestAnimationFrame(gameLoop);  // cycle game, aka recursion
     }
 
-    setMinFrame(minFrame){
-        this.minFrame = minFrame;
-    }
+    // Window resize
+    window.addEventListener('resize', function () {
+        GameEnv.setGameEnv();  // Update GameEnv dimensions
 
-    getMaxFrame(){
-        return this.maxFrame;
-    }
+        // Call the sizing method on all game objects
+        for (var gameObj of GameObject.gameObjectArray){
+            gameObj.size();
+        }
+    });
 
-    setMaxFrame(maxFrame){
-        this.maxFrame = maxFrame;
-    }
+    // Toggle "canvas filter property" between alien and normal
+    var isFilterEnabled = false;
+    const defaultFilter = getComputedStyle(document.documentElement).getPropertyValue('--default-canvas-filter');
+    toggleCanvasEffect.addEventListener("click", function () {
+        for (var gameObj of GameObject.gameObjectArray){
+            if (gameObj.invert && isFilterEnabled) {  // toggle on
+                gameObj.canvas.style.filter = defaultFilter;  // remove filter
+            } else if (gameObj.invert) { // toggle off
+                gameObj.canvas.style.filter = "none";  // remove filter
+            } else {
+                gameObj.canvas.style.filter = defaultFilter;  // remove filter
+            }
+        }
+        isFilterEnabled = !isFilterEnabled;  // switch boolean value
+    });
+  
 
-    getFrameX() {
-        return this.frameX;
-    }
+    // Setup and store Game Objects
+    async function setupGame() {   
+        try {
+            // Open image files for Game Objects
+            const [backgroundImg, platformImg, dogImg, monkeyImg, vaderImg] = await Promise.all([
+                loadImage('{{backgroundFile}}'),
+                loadImage('{{platformFile}}'),
+                loadImage('{{dogSpriteImage}}'),
+                loadImage('{{monkeySpriteImage}}'),
+                loadImage('{{vaderSpriteImage}}')
+            ]);
 
-    setFrameX(frameX){
-        this.frameX = frameX;
-    }
+            // Setup Globals
+            GameEnv.gameSpeed = 2;
+            GameEnv.gravity = 3;
 
-    getFrameY() {
-        return this.frameY;
-    }
+            // Prepare HTML with Background Canvas
+            const backgroundCanvas = document.createElement("canvas");
+            backgroundCanvas.id = "background";
+            document.querySelector("#canvasContainer").appendChild(backgroundCanvas);
+            // Background object
+            const backgroundSpeedRatio = 0.2
+            new Background(backgroundCanvas, backgroundImg, backgroundSpeedRatio);  // Background Class calls GameObject Array which stores the instance
 
-    setFrameY(frameY){
-        this.frameY = frameY;
-    }
+            // Prepare HTML with Platform Canvas
+            const platformCanvas = document.createElement("canvas");
+            platformCanvas.id = "platform";
+            document.querySelector("#canvasContainer").appendChild(platformCanvas);
+            // Platform object
+            const platformSpeedRatio = 0.2;
+            initPlatform(platformCanvas, platformImg, platformSpeedRatio);
 
-    /* Draw character object
-     * Canvas and Context
-    */
-    draw() {
-        // Set fixed dimensions and position for the Character
-        this.canvas.width = this.spriteWidth * this.spriteScale;
-        this.canvas.height = this.spriteHeight * this.spriteScale;
-        this.canvas.style.width = `${this.canvas.width}px`;
-        this.canvas.style.height = `${this.canvas.height}px`;
-        this.canvas.style.position = 'absolute';
-        this.canvas.style.left = `${this.x}px`; // Set character horizontal position based on its x-coordinate
-        this.canvas.style.top = `${this.y}px`; // Set character up and down position based on its y-coordinate
+            // Prepare HTML with Dog Canvas
+            const dogCanvas = document.createElement("canvas");
+            dogCanvas.id = "characters";
+            document.querySelector("#canvasContainer").appendChild(dogCanvas);
+            // Dog object
+            const dogSpeedRatio = 0.2
+            initDog(dogCanvas, dogImg, dogSpeedRatio, document.getElementById("controls"));
 
-        this.ctx.drawImage(
-            this.image,
-            this.frameX * this.spriteWidth,
-            this.frameY * this.spriteHeight,
-            this.spriteWidth,
-            this.spriteHeight,
-            0,
-            0,
-            this.canvas.width,
-            this.canvas.height
-        );
-    }
+            // Prepare HTML with Monkey Canvas
+            const monkeyCanvas = document.createElement("canvas");
+            monkeyCanvas.id = "characters";
+            document.querySelector("#canvasContainer").appendChild(monkeyCanvas);
+            // Monkey object
+            const monkeySpeedRatio = 0.7
+            initMonkey(monkeyCanvas, monkeyImg, monkeySpeedRatio);              
+ 
+            // Prepare HTML with Vader Canvas
+            const vaderCanvas = document.createElement("canvas");
+            vaderCanvas.id = "characters";
+            document.querySelector("#canvasContainer").appendChild(vaderCanvas);
+            // Vader object
+            const vaderSpeedRatio = 0
+            initVader(vaderCanvas, vaderImg, vaderSpeedRatio); 
 
-    /* Method should be called on resize events 
-     * intent is to place character in proportion to new size
-    */
-    size() {
-        // Calculate proportional x and y positions based on the new screen dimensions
-        if (GameEnv.prevInnerWidth) {
-            const proportionalX = (this.x / GameEnv.prevInnerWidth) * GameEnv.innerWidth;
-            const proportionalY = (this.y / GameEnv.prevBottom) * GameEnv.bottom;
-
-            // Update the x and y positions based on the proportions
-            this.setX(proportionalX);
-            this.setY(proportionalY);
-        } else {
-            // First Screen Position
-            this.setX(Math.random() * GameEnv.innerWidth);
-            this.setY(GameEnv.bottom);
+            //var platform = new Platform(0, GameEnv.bottom - 50, GameEnv.innerWidth, 10);
+        
+        // Trap errors on failed image loads
+        } catch (error) {
+            console.error('Failed to load one or more images:', error);
         }
     }
+  
+    // Call and wait for Game Objects to be ready
+    await setupGame();
 
-    /* Update cycle check collisions
-     * override draw for custom update
-     * be sure to have updated draw call super.update()
-    */
-    update() {
-        if (GameEnv.bottom > this.y && this.gravityEnabled)
-            this.y += GameEnv.gravity;
+    // Trigger a resize at start up
+    window.dispatchEvent(new Event('resize'));
+    toggleCanvasEffect.dispatchEvent(new Event('click'));
 
-        // Update animation frameX of the object
-        if (this.frameX < this.maxFrame) {
-            this.frameX++;
-        } else {
-            this.frameX = 0;
-        }
+    // Start the game
+    gameLoop();
 
-        this.collisionChecks();
-    }
-}
-
-export default Character;
+</script>
