@@ -16,6 +16,7 @@ So I'm behind since I haven't updated my repo to be like the group one. I need t
 # Next:
 - Implement the Goomba into the personal repo (and group repo)
 - Mess around with the Goomba
+- IMPORTANT: Help Trystan and Ian with the LocalStorage lesson
 
-Estimated Time: 5 Hours
+# Estimated Time: 5 Hours
 - Wish me luck! Matthew (12/6)
