@@ -6,7 +6,9 @@ export class GameEnv {
     static gameObjects = [];
 
     // game attributes
-    static gameSpeed = 2;
+    static backgroundSpeed = 0;
+    static backgroundSpeed2 = 0;
+    static gameSpeed = 5;
     static gravity = 3;
     static innerWidth;
     static prevInnerWidth;
@@ -18,7 +20,7 @@ export class GameEnv {
     static prevFloor;
     // calculated size properties
     static backgroundHeight = 0;
-    static platformHeight = 0;
+    static platformHeight = 1;
 
     // canvas filter property
     static isInverted = true;

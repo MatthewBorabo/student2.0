@@ -77,10 +77,11 @@ image: /images/platformer/backgrounds/hills.png
       },
       backgrounds: {
         start: { src: "/images/platformer/backgrounds/Joke.jpg" },
-        hills: { src: "/images/platformer/backgrounds/GD_Background.png" },
+        hills: { src: "/images/platformer/backgrounds/hills.png" },
+        mountains: { src: "/images/platformer/backgrounds/mountains.jpg"},
         planet: { src: "/images/platformer/backgrounds/Del_Norte.png" },
         castles: { src: "/images/platformer/backgrounds/castles.png" },
-        end: { src: "/images/platformer/backgrounds/game_over.png" }
+        end: { src: "/images/platformer/backgrounds/game_over.png" },
       },
       players: {
         mario: {
@@ -195,8 +196,8 @@ image: /images/platformer/backgrounds/hills.png
     new GameLevel( {tag: "start", callback: startGameCallback } );
     new GameLevel( {tag: "home", background: assets.backgrounds.start, callback: homeScreenCallback } );
     // Game screens
-    new GameLevel( {tag: "hills", background: assets.backgrounds.hills, platform: assets.platforms.grass, platformO: assets.platformO.grass, player: assets.players.mario, tube: assets.obstacles.tube, callback: testerCallBack, } );
-    new GameLevel( {tag: "alien", background: assets.backgrounds.planet, platform: assets.platforms.alien, player: assets.players.monkey, enemy: assets.enemies.goomba, callback: testerCallBack } );
+    new GameLevel( {tag: "hills", background: assets.backgrounds.hills, background2: assets.backgrounds.mountains, platform: assets.platforms.grass, platformO: assets.platformO.grass, player: assets.players.mario, tube: assets.obstacles.tube, callback: testerCallBack, } );
+    new GameLevel( {tag: "school", background: assets.backgrounds.planet, platform: assets.platforms.alien, player: assets.players.monkey, enemy: assets.enemies.goomba, callback: testerCallBack } );
     // Game Over screen
     new GameLevel( {tag: "end", background: assets.backgrounds.end, callback: gameOverCallBack } );
 
