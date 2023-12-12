@@ -1,6 +1,8 @@
 import GameEnv from './GameEnv.js';
 import Character from './Character.js';
 import deathController from './Death.js';
+import GameObject from './GameObject.js';
+import GameControl from './GameControl.js'
 
 export class Player extends Character{
     // constructors sets up Character object 
@@ -123,12 +125,12 @@ export class Player extends Character{
             // Collision with the left side of the Enemy
             if (this.collisionData.touchPoints.other.left) {
                 // Kill Player (Reset Game)
-               GameObject.transitionToLevel(GameEnv.levels[1]);
+               GameControl.transitionToLevel(GameEnv.levels[1]);
             }
             // Collision with the right side of the Enemy
             if (this.collisionData.touchPoints.other.right) {
                 // Kill Player (Reset Game)
-                GameObject.transitionToLevel(GameEnv.levels[1]);
+                GameControl.transitionToLevel(GameEnv.levels[1]);
                 
             }
             // Collision with the top of the Enemy
