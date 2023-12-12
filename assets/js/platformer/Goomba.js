@@ -7,6 +7,8 @@ class Goomba extends Character{
         console.log(image);
         super(canvas, image, speedRatio, enemyData.width, 
             enemyData.height, )
+        // Initial Position of Goomba
+        this.x = .60 * GameEnv.innerWidth;
     }
 
     update() {
