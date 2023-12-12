@@ -1,5 +1,6 @@
 import GameEnv from './GameEnv.js';
 import Character from './Character.js';
+import deathController from './Death.js';
 
 export class Player extends Character{
     // constructors sets up Character object 
@@ -83,7 +84,7 @@ export class Player extends Character{
             }, 2000);
         }
     
-        // make sure jump has ssome velocity
+        // make sure jump has some velocity
         if (result) {
             // Adjust horizontal position during the jump
             const horizontalJumpFactor = 0.1; // Adjust this factor as needed
@@ -108,7 +109,7 @@ export class Player extends Character{
             if (this.movement.right) this.x += this.speed;  // Move to right
         }
         if (this.isGravityAnimation("w")) {
-            if (this.movement.down) this.y -= (this.bottom * .11);  // jump 11% higher than bottom
+            if (this.movement.down) this.y -= (this.bottom * .25);  // jump 25% higher than bottom
         } 
 
         // Perform super update actions
@@ -117,6 +118,28 @@ export class Player extends Character{
 
     // Player action on collisions
     collisionAction() {
+        // Enemy collision
+        if (this.collisionData.touchPoints.other.id === "enemy") {
+            // Collision with the left side of the Enemy
+            if (this.collisionData.touchPoints.other.left) {
+                // Kill Player (Reset Game)
+               GameObject.transitionToLevel(GameEnv.levels[1]);
+            }
+            // Collision with the right side of the Enemy
+            if (this.collisionData.touchPoints.other.right) {
+                // Kill Player (Reset Game)
+                GameObject.transitionToLevel(GameEnv.levels[1]);
+                
+            }
+            // Collision with the top of the Enemy
+            if (this.collisionData.touchPoints.other.ontop) {
+                // Kill Goomba
+                this.y -= (this.bottom * .33);
+                // Make Mario Bounce
+                destroy = 1;
+            }
+        }
+        // Tube collision
         if (this.collisionData.touchPoints.other.id === "tube") {
             // Collision with the left side of the Tube
             if (this.collisionData.touchPoints.other.left) {
@@ -138,7 +161,7 @@ export class Player extends Character{
             this.movement.down = true;
         }
     }
-    
+
     // Event listener key down
     handleKeyDown(event) {
         if (this.playerData.hasOwnProperty(event.key)) {
