@@ -1,53 +1,117 @@
 import GameEnv from './GameEnv.js';
 import GameObject from './GameObject.js';
 
-export class Background extends GameObject {
-    constructor(canvas, image, speedRatio) {
+class Character extends GameObject {
+    constructor(canvas, image, speedRatio,
+        spriteWidth, spriteHeight, spriteScale) {
+                var characterArray = [];
         super(canvas, image, speedRatio);
+        this.spriteWidth = spriteWidth;
+        this.spriteHeight = spriteHeight;
+        this.spriteScale = spriteScale;
+        this.minFrame = 0;
+        this.maxFrame = 0;
+        this.frameX = 0;  // Default X frame of the animation
+        this.frameY = 0;  // Default Y frame of the animation
+        this.collisionWidth = spriteWidth * spriteScale;
+        this.collisionHeight = spriteHeight * spriteScale;
+        this.gravityEnabled = true;
     }
 
-    /* Update uses modulo math to cycle to start at width extent
-    *  x is position in cycle 
-    *  speed can be used to scroll faster
-    *  width is extent of background image
-    */
-    update() {
-        this.x = (this.x - this.speed) % this.width;
+    getMinFrame(){
+        return this.manFrame;
     }
 
-    /* To draws are used to capture primary frame and wrap around ot next frame
-     * x to y is primary draw
-     * x + width to y is wrap around draw
+    setMinFrame(minFrame){
+        this.minFrame = minFrame;
+    }
+
+    getMaxFrame(){
+        return this.maxFrame;
+    }
+
+    setMaxFrame(maxFrame){
+        this.maxFrame = maxFrame;
+    }
+
+    getFrameX() {
+        return this.frameX;
+    }
+
+    setFrameX(frameX){
+        this.frameX = frameX;
+    }
+
+    getFrameY() {
+        return this.frameY;
+    }
+
+    setFrameY(frameY){
+        this.frameY = frameY;
+    }
+
+    /* Draw character object
+     * Canvas and Context
     */
     draw() {
-        this.ctx.drawImage(this.image, this.x, this.y);
-        this.ctx.drawImage(this.image, this.x + this.width, this.y);
+        // Set fixed dimensions and position for the Character
+        this.canvas.width = this.spriteWidth * this.spriteScale;
+        this.canvas.height = this.spriteHeight * this.spriteScale;
+        this.canvas.style.width = `${this.canvas.width}px`;
+        this.canvas.style.height = `${this.canvas.height}px`;
+        this.canvas.style.position = 'absolute';
+        this.canvas.style.left = `${this.x}px`; // Set character horizontal position based on its x-coordinate
+        this.canvas.style.top = `${this.y}px`; // Set character up and down position based on its y-coordinate
+
+        this.ctx.drawImage(
+            this.image,
+            this.frameX * this.spriteWidth,
+            this.frameY * this.spriteHeight,
+            this.spriteWidth,
+            this.spriteHeight,
+            0,
+            0,
+            this.canvas.width,
+            this.canvas.height
+        );
     }
 
-    /* Background camvas is set to screen
-     * the ADJUST contant elements portions of image that don't wrap well
-     * the GameEnv.top is a getter used to set canvas under Menu
-     * the GameEnv.bottom is setter used to establish game bottom at offsetHeight of canvas 
-    */ 
+    /* Method should be called on resize events 
+     * intent is to place character in proportion to new size
+    */
     size() {
-        // Update canvas size
-        const ADJUST = 1 // visual layer adjust; alien_planet.jpg: 1.42, try 1 for others
+        // Calculate proportional x and y positions based on the new screen dimensions
+        if (GameEnv.prevInnerWidth) {
+            const proportionalX = (this.x / GameEnv.prevInnerWidth) * GameEnv.innerWidth;
+            const proportionalY = (this.y / GameEnv.prevBottom) * GameEnv.bottom;
 
-        const canvasWidth = GameEnv.innerWidth;
-        const canvasHeight = canvasWidth / this.aspect_ratio;
-        const canvasLeft = 0;
+            // Update the x and y positions based on the proportions
+            this.setX(proportionalX);
+            this.setY(proportionalY);
+        } else {
+            // First Screen Position
+            this.setX(Math.random() * GameEnv.innerWidth);
+            this.setY(GameEnv.bottom);
+        }
+    }
 
-        this.canvas.width = this.width / ADJUST;
-        this.canvas.height = this.height / ADJUST;
-        this.canvas.style.width = `${canvasWidth}px`;
-        this.canvas.style.height = `${canvasHeight}px`;
-        this.canvas.style.position = 'absolute';
-        this.canvas.style.left = `${canvasLeft}px`;
-        this.canvas.style.top = `${GameEnv.top}px`;
+    /* Update cycle check collisions
+     * override draw for custom update
+     * be sure to have updated draw call super.update()
+    */
+    update() {
+        if (GameEnv.bottom > this.y && this.gravityEnabled)
+            this.y += GameEnv.gravity;
 
-        // set bottom of game to new background height
-        GameEnv.setBottom();
+        // Update animation frameX of the object
+        if (this.frameX < this.maxFrame) {
+            this.frameX++;
+        } else {
+            this.frameX = 0;
+        }
+
+        this.collisionChecks();
     }
 }
 
-export default Background;
+export default Character;

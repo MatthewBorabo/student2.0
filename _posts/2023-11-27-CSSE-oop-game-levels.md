@@ -3,7 +3,7 @@ layout: base
 title: Dynamic Game Levels
 description: Early steps in adding levels to an OOP Game.  This includes basic animations left-right-jump, multiple background, and simple callback to terminate each level.
 type: ccc
-courses: { csse: {week: 14}, csp: {week: 14}, csa: {week: 14} }
+courses: { csse: {week: 14} }
 image: /images/platformer/backgrounds/hills.png
 ---
 
@@ -28,12 +28,6 @@ image: /images/platformer/backgrounds/hills.png
 
 <div id="mySidenav" class="sidenav">
   <a href="javascript:void(0)" id="toggleNavigationBar1" class="closebtn">&times;</a>
-  <table>
-    <tr id="navigationPlaceAfter">
-      <th>Level</th>
-      <th>Character</th>
-    </tr>
-  </table>
 </div>
 
 <!-- Prepare DOM elements -->
@@ -75,7 +69,8 @@ image: /images/platformer/backgrounds/hills.png
       },
       platforms: {
         grass: { src: "/images/platformer/platforms/pigfarm.png"},
-        alien: { src: "/images/platformer/platforms/carpet.png" }
+        alien: { src: "/images/platformer/platforms/alien.png" },
+        carpet: { src: "/images/platformer/platforms/carpet.jpeg"}
       },
       backgrounds: {
         start: { src: "/images/platformer/backgrounds/Joke.jpg" },
@@ -106,8 +101,15 @@ image: /images/platformer/backgrounds/hills.png
           a: { row: 1, frames: 15, idleFrame: { column: 7, frames: 0 } },
           s: { row: 12, frames: 15 },
           d: { row: 0, frames: 15, idleFrame: { column: 7, frames: 0 } }
+        },
+      },
+      enemies: {
+        goomba: {
+          src: "/images/platformer/sprites/goomba.png",
+          width: 448,
+          height: 452,
         }
-      }
+      },
     };
 
     // add File to assets, ensure valid site.baseurl
@@ -191,7 +193,7 @@ image: /images/platformer/backgrounds/hills.png
     new GameLevel( {tag: "home", background: assets.backgrounds.start, callback: homeScreenCallback } );
     // Game screens
     new GameLevel( {tag: "hills", background: assets.backgrounds.hills, platform: assets.platforms.grass, player: assets.players.mario, tube: assets.obstacles.tube, callback: testerCallBack } );
-    new GameLevel( {tag: "alien", background: assets.backgrounds.planet, platform: assets.platforms.alien, player: assets.players.monkey, callback: testerCallBack } );
+    new GameLevel( {tag: "alien", background: assets.backgrounds.planet, platform: assets.platforms.alien, player: assets.players.monkey, enemy: assets.enemies.goomba, callback: testerCallBack } );
     // Game Over screen
     new GameLevel( {tag: "end", background: assets.backgrounds.end, callback: gameOverCallBack } );
 
@@ -219,72 +221,33 @@ image: /images/platformer/backgrounds/hills.png
   }
   document.getElementById("toggleNavigationBar").addEventListener("click",toggleWidth);
   document.getElementById("toggleNavigationBar1").addEventListener("click",toggleWidth);
+
   //generate table
-  import GameEnv from '{{site.baseurl}}/assets/js/platformer/GameEnv.js';
-  import GameLevel from '{{site.baseurl}}/assets/js/platformer/GameLevel.js';
-  import GameControl from '{{site.baseurl}}/assets/js/platformer/GameControl.js';
+  import Controller from '{{site.baseurl}}/assets/js/platformer/Controller.js';
   
-  var levels = GameEnv.levels;
-  var assets = {
-    obstacles: {
-      tube: { src: "/images/platformer/obstacles/tube.png" },
-    },
-    platforms: {
-      grass: { src: "/images/platformer/platforms/pigfarm.png"},
-      alien: { src: "/images/platformer/platforms/alien.png" }
-    },
-    backgrounds: {
-      start: { src: "/images/platformer/backgrounds/Joke.jpg" },
-      hills: { src: "/images/platformer/backgrounds/GD_Background.png" },
-      planet: { src: "/images/platformer/backgrounds/planet.jpg" },
-      castles: { src: "/images/platformer/backgrounds/castles.png" },
-      end: { src: "/images/platformer/backgrounds/game_over.png" }
-    },
-    players: {
-      mario: {
-        src: "/images/platformer/sprites/mario.png",
-        width: 256,
-        height: 256,
-        w: { row: 10, frames: 15 },
-        wa: { row: 11, frames: 15 },
-        wd: { row: 10, frames: 15 },
-        a: { row: 3, frames: 7, idleFrame: { column: 7, frames: 0 } },
-        s: { row: null, frames: null},
-        d: { row: 2, frames: 7, idleFrame: { column: 7, frames: 0 } }
-      },
-      monkey: {
-        src: "/images/platformer/sprites/monkey.png",
-        width: 40,
-        height: 40,
-        w: { row: 9, frames: 15 },
-        wa: { row: 9, frames: 15 },
-        wd: { row: 9, frames: 15 },
-        a: { row: 1, frames: 15, idleFrame: { column: 7, frames: 0 } },
-        s: { row: 12, frames: 15 },
-        d: { row: 0, frames: 15, idleFrame: { column: 7, frames: 0 } }
-      }
-    }
-  };
+  var myController = new Controller();
+  myController.initialize();
 
-    var placeAfterElement = document.getElementById("navigationPlaceAfter");
-
-    for(let i=levels.length-1;i>-1;i-=1){
-      var row = document.createElement("tr");
-      var c1 = document.createElement("td");
-      var c2 = document.createElement("td");
-      c1.innerText = levels[i].tag;
-      if(levels[i].playerData){ //if player exists
-          var charImage = new Image();
-          charImage.src = "{{site.baseurl}}/"levels[i].playerData.src;
-//        var array = levels[i].playerData.src.split("/");
-//        c2.innerText = array[array.length-1];
-          c2.append(charImage);
-      }
-      else{
-        c2.innerText = "none";
-      }
-      row.append(c1);
-      row.append(c2);
-      placeAfterElement.insertAdjacentElement("afterend",row);
-    }
+  var table = myController.table;
+  document.getElementById("mySidenav").append(table);
+  
+    //for(let i=levels.length-1;i>-1;i-=1){
+    //  var row = document.createElement("tr");
+    //  var c1 = document.createElement("td");
+    //  var c2 = document.createElement("td");
+    //  c1.innerText = levels[i].tag;
+    //  if(levels[i].playerData){ //if player exists
+    //      var charImage = new Image();
+    //      charImage.src = "{{site.baseurl}}/"+levels[i].playerData.src;
+    //      //var array = levels[i].playerData.src.split("/");
+    //      //c2.innerText = array[array.length-1];
+    //      c2.append(charImage);
+    //  }
+    //  else{
+    //    c2.innerText = "none";
+    //  }
+    //  row.append(c1);
+    //  row.append(c2);
+    //  placeAfterElement.insertAdjacentElement("afterend",row);
+    //}
 </script>
