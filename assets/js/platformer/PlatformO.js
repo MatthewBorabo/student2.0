@@ -15,7 +15,7 @@ export class PlatformO extends GameObject {
         this.ctx.drawImage(this.image, 0, 0);
     }
 
-    // Set Tube position
+    // Set platform position
     size() {
         // Formula for Height should be on constant ratio, using a proportion of 832
         const scaledHeight = GameEnv.innerHeight * (60/832);

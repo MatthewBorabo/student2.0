@@ -4,7 +4,9 @@ import Background from './Background.js';
 import Platform from './Platform.js';
 import Player from './Player.js';
 import Tube from './Tube.js';
-import Goomba from './Goomba.js'
+import Goomba from './Goomba.js';
+import PlatformO from './PlatformO.js';
+import Thing1 from './Thing1.js';
 
 // Store the assets and attributes of the Game at the specific GameLevel.
 class GameLevel {
@@ -13,8 +15,9 @@ class GameLevel {
         this.tag = gameObject?.tag;
         this.backgroundImg2 = gameObject.background2?.file;
         this.backgroundImg = gameObject.background?.file;
-        this.platformImg = gameObject.platform?.file;
+        this.platformImg = gameObject.platform?.file; 
         this.platformOImg = gameObject.platformO?.file; // You want to add this one!
+        this.thingImg = gameObject.thing?.file; // Add this for Step 2! (Platformer Lesson)
         this.playerImg = gameObject.player?.file;
         this.playerData = gameObject?.player;
         this.enemyImg = gameObject.enemy?.file;
@@ -44,6 +47,9 @@ class GameLevel {
         if (this.tubeImg) {
             imagesToLoad.push(this.loadImage(this.tubeImg));
         }
+        if (this.thing1Img) {
+            imagesToLoad.push(this.loadImage(this.thingImg));
+        }
         if (this.enemyImg) {
             imagesToLoad.push(this.loadImage(this.enemyImg));
         }
@@ -56,7 +62,7 @@ class GameLevel {
             const loadedImages = await Promise.all(imagesToLoad);
             var i = 0;
 
-            // Prepare HTML with Background Canvas (if backgroundImg2 is defined)
+            // Prepare HTML with Background2 Canvas (if backgroundImg2 is defined)
             if (this.backgroundImg2) {
                 const backgroundCanvas = document.createElement("canvas");
                 backgroundCanvas.id = "background";
@@ -65,6 +71,7 @@ class GameLevel {
                 new Background2(backgroundCanvas, loadedImages[i], backgroundSpeedRatio);
                 i++;
             }
+
             // Prepare HTML with Background Canvas (if backgroundImg is defined)
             if (this.backgroundImg) {
                 const backgroundCanvas = document.createElement("canvas");
@@ -95,6 +102,32 @@ class GameLevel {
                 i++;
             }
 
+            if (this.tubeImg) {
+                const tubeCanvas = document.createElement("canvas");
+                tubeCanvas.id = "tube";
+                document.querySelector("#canvasContainer").appendChild(tubeCanvas);
+                new Tube(tubeCanvas, loadedImages[i]);
+                i++;
+            }
+
+            if (this.thingImg) {
+                const platformCanvas = document.createElement("canvas");
+                platformCanvas.id = "thing2";
+                document.querySelector("#canvasContainer").appendChild(platformCanvas);
+                const platformSpeedRatio = 0;
+                new Thing1(platformCanvas, loadedImages[i], platformSpeedRatio);
+                i++;
+            }
+
+            if (this.platformOImg) {
+                const platformCanvas = document.createElement("canvas");
+                platformCanvas.id = "jumpPlatform";
+                document.querySelector("#canvasContainer").appendChild(platformCanvas);
+                const platformSpeedRatio = 0;
+                new PlatformO(platformCanvas, loadedImages[i], platformSpeedRatio);
+                i++;
+            }
+
             // Prepare HTML with Enemy Canvas (if enemyImg is defined)
             if (this.enemyImg) {
                 const enemyCanvas = document.createElement("canvas");
@@ -102,15 +135,6 @@ class GameLevel {
                 document.querySelector("#canvasContainer").appendChild(enemyCanvas);
                 const enemySpeedRatio = 0.7;
                 new Goomba(enemyCanvas, loadedImages[i], enemySpeedRatio, this.enemyData);
-                i++;
-            }
-
-            // Prepare HTML with Player Canvas (if playerImg is defined)
-            if (this.tubeImg) {
-                const tubeCanvas = document.createElement("canvas");
-                tubeCanvas.id = "tube";
-                document.querySelector("#canvasContainer").appendChild(tubeCanvas);
-                new Tube(tubeCanvas, loadedImages[i]);
                 i++;
             }
 

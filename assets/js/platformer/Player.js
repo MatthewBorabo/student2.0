@@ -165,6 +165,60 @@ export class Player extends Character{
             this.movement.right = true;
             this.movement.down = true;
         }
+        // Platform collision
+        if (this.collisionData.touchPoints.other.id === "jumpPlatform") {
+            // Collision with the left side of the Platform
+            console.log("id")
+            if (this.collisionData.touchPoints.other.left && (this.topOfPlatform === true)) {
+                this.movement.right = false;
+                console.log("platform left")
+            }
+            // Collision with the right side of the platform
+            if (this.collisionData.touchPoints.other.right && (this.topOfPlatform === true)) {
+                this.movement.left = false;
+                console.log("platform right")
+            }
+            // Collision with the top of the player
+            if (this.collisionData.touchPoints.this.ontop) {
+                this.gravityEnabled = false;
+                this.topOfPlatform = true;
+                console.log("platform top")
+            }
+            // Collision with the bottom of the player
+            if (this.collisionData.touchPoints.this.bottom) {
+                this.gravityEnabled = false;
+                console.log("platform bottom")
+            }
+            if (this.collisionData.touchPoints.this.top) {
+                this.gravityEnabled = false;
+                this.topOfPlatform = true;
+                console.log(this.topOfPlatform + "top")
+                console.log(this.gravityEnabled + "grav")
+                //console.log("e");
+            }
+        } else {
+            this.topOfPlatform = false;
+            this.gravityEnabled = true;
+            console.log(this.topOfPlatform + "top")
+            console.log(this.gravityEnabled + "grav")
+            this.movement.left = true;
+            this.movement.right = true;
+            this.movement.down = true;
+        }  
+        if (this.collisionData.touchPoints.other.id === "thing2") {
+            // Collision with the left side of the Tube
+            if (this.collisionData.touchPoints.Coin.left) {
+                this.touchCoin = true;
+                console.log("o")
+                window.location.reload();
+            }
+            // Collision with the right side of the Tube
+            if (this.collisionData.touchPoints.Coin.right) {
+                console.log("p")
+                this.touchCoin = true;
+                window.location.reload();
+            }
+        }
     }
 
     // Event listener key down
