@@ -6,7 +6,7 @@ import GameControl from './GameControl.js'
 
 export class Player extends Character{
     // constructors sets up Character object 
-    constructor(canvas, image, speedRatio, playerData){
+    constructor(canvas, image, speedRatio, playerData, speedLimit){
         super(canvas, 
             image, 
             speedRatio,
@@ -29,6 +29,12 @@ export class Player extends Character{
         // Add event listeners
         document.addEventListener('keydown', this.keydownListener);
         document.addEventListener('keyup', this.keyupListener);
+
+        // Additional Property for Speed Limit
+        this.speedLimit = speedLimit;
+        this.currentSpeed = 0;
+        this.acceleration = 0.11; // Adjust based on preference
+        this.deceleration = 0.1; // Adjust based on preference 
 
         GameEnv.player = this;
     }
@@ -61,6 +67,53 @@ export class Player extends Character{
         }
         
         return result;
+    }
+
+    // Player updates
+    update() {
+        // Adjust speed based on pressed keys
+        if (this.pressedKeys['a'] && this.movement.left) {
+            this.currentSpeed -= this.acceleration;
+        } else if (this.pressedKeys['d'] && this.movement.right) {
+            this.currentSpeed += this.acceleration;
+        } else {
+            // Decelerate when no movement keys are pressed
+            this.currentSpeed *= (1 - this.deceleration);
+        }
+
+        // Apply speed limit
+        if (Math.abs(this.currentSpeed) > this.speedLimit) {
+            this.currentSpeed = this.currentSpeed > 0 ? this.speedLimit : -this.speedLimit;
+        }
+
+        // Update player position based on speed
+        this.x += this.currentSpeed;
+
+        // Check for speed threshold to change sprite sheet rows
+        const walkingSpeedThreshold = 1; // Walking speed threshold
+        const runningSpeedThreshold = 5; // Running speed threshold
+
+        if (Math.abs(this.currentSpeed) >= runningSpeedThreshold) {
+            // Change sprite sheet row for running
+            if (this.currentSpeed > 0) {
+            this.setFrameY(this.playerData.runningRight.row);
+            } else {
+                this.setFrameY(this.playerData.runningLeft.row);
+            }
+        } else if (Math.abs(this.currentSpeed) >= walkingSpeedThreshold) {
+            // Change sprite sheet row for walking
+            if (this.currentSpeed > 0) {
+                this.setFrameY(this.playerData.d.row);
+            } else {
+                this.setFrameY(this.playerData.a.row);
+            }
+            } else {
+            // Revert to normal animation if speed is below the walking threshold
+            this.setFrameY(this.playerData.idle.row);
+            }
+
+        // Perform super update actions
+        super.update();
     }
 
     // check for gravity based animation

@@ -98,6 +98,20 @@ image: /images/platformer/backgrounds/hills.png
           s: { row: null, frames: null},
           d: { row: 2, frames: 7, idleFrame: { column: 7, frames: 0 } }
         },
+        lopez: {
+          src: "/images/platformer/sprites/lopezanimation.png", // Modify this to match your file path
+          width: 46,
+          height: 52.5,
+          idle: { row: 6, frames: 1, idleFrame: {column: 1, frames: 0} },
+          a: { row: 1, frames: 3, idleFrame: { column: 1, frames: 0 } }, // Right Movement
+          d: { row: 2, frames: 3, idleFrame: { column: 1, frames: 0 } }, // Left Movement 
+          w: {row: 3, frames: 3},
+          wa: {row: 3, frames: 3},
+          wd: {row: 3, frames: 3},
+          runningLeft: { row: 5, frames: 4, idleFrame: {column: 1, frames: 0} },
+          runningRight: { row: 4, frames: 4, idleFrame: {column: 1, frames: 0} },
+          s: {}, // Stop the movement 
+        },
         monkey: {
           src: "/images/platformer/sprites/monkey.png",
           width: 40,
@@ -200,7 +214,8 @@ image: /images/platformer/backgrounds/hills.png
     new GameLevel( {tag: "home", background: assets.backgrounds.start, callback: homeScreenCallback } );
     // Game screens
     new GameLevel( {tag: "hills", background: assets.backgrounds.hills, background2: assets.backgrounds.mountains, platform: assets.platforms.grass, platformO: assets.platformO.brick, player: assets.players.mario, tube: assets.obstacles.tube, callback: testerCallBack, thing: assets.thing.coin, } );
-    new GameLevel( {tag: "school", background: assets.backgrounds.planet, platform: assets.platforms.alien, player: assets.players.monkey, enemy: assets.enemies.goomba, callback: testerCallBack } );
+    new GameLevel( {tag: "school", background: assets.backgrounds.planet, platform: assets.platforms.alien, player: assets.players.lopez, enemy: assets.enemies.goomba, callback: testerCallBack } );
+    new GameLevel( {tag: "alien", background: assets.backgrounds.planet, platform: assets.platforms.alien, player: assets.players.monkey, enemy: assets.enemies.goomba, callback: testerCallBack } );
     // Game Over screen
     new GameLevel( {tag: "end", background: assets.backgrounds.end, callback: gameOverCallBack } );
 
@@ -238,23 +253,4 @@ image: /images/platformer/backgrounds/hills.png
   var table = myController.table;
   document.getElementById("mySidenav").append(table);
   
-    //for(let i=levels.length-1;i>-1;i-=1){
-    //  var row = document.createElement("tr");
-    //  var c1 = document.createElement("td");
-    //  var c2 = document.createElement("td");
-    //  c1.innerText = levels[i].tag;
-    //  if(levels[i].playerData){ //if player exists
-    //      var charImage = new Image();
-    //      charImage.src = "{{site.baseurl}}/"+levels[i].playerData.src;
-    //      //var array = levels[i].playerData.src.split("/");
-    //      //c2.innerText = array[array.length-1];
-    //      c2.append(charImage);
-    //  }
-    //  else{
-    //    c2.innerText = "none";
-    //  }
-    //  row.append(c1);
-    //  row.append(c2);
-    //  placeAfterElement.insertAdjacentElement("afterend",row);
-    //}
 </script>
