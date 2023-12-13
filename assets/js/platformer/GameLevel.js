@@ -14,7 +14,7 @@ class GameLevel {
         this.backgroundImg2 = gameObject.background2?.file;
         this.backgroundImg = gameObject.background?.file;
         this.platformImg = gameObject.platform?.file;
-        this.platformOImg = gameObject.platformO?.file;
+        this.platformOImg = gameObject.platformO?.file; // You want to add this one!
         this.playerImg = gameObject.player?.file;
         this.playerData = gameObject?.player;
         this.enemyImg = gameObject.enemy?.file;

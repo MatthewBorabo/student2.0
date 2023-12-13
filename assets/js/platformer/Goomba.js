@@ -1,5 +1,6 @@
 import Character from './Character.js';
 import GameEnv from './GameEnv.js';
+import GameObject from './GameObject.js';
 
 export class Enemy extends Character {
     // constructors sets up Character object 
@@ -16,6 +17,8 @@ export class Enemy extends Character {
         this.x = 0.3 * GameEnv.innerWidth;
         this.speedChangeInterval = 1390; // Time interval to change speed (in milliseconds)
         this.lastSpeedChange = Date.now(); // Track the time of the last speed change
+        this.scaledCharacterHeightRatio = (1/20);
+        this.isGoomba = true;
     }
 
     update() {
@@ -35,11 +38,15 @@ export class Enemy extends Character {
             this.lastSpeedChange = currentTime; // Update last speed change time
         }
 
-        // Check if the enemy is at the left or right boundary
-        if (this.x <= 0 || this.x + this.width >= GameEnv.innerWidth) {
-            // Change direction by reversing the speed
-            this.speed = -this.speed;
-        }
+            var direction = this.speed > 0;
+            // Check if the enemy is at the left or right boundary
+            if (this.x <= 0 && (direction == false||this.speed>=0))  {
+                // Change direction by reversing the speed
+                this.speed = -this.speed;
+            }
+            else if(this.x + this.canvasWidth >= GameEnv.innerWidth && (direction == true||this.speed<0)){
+                this.speed = -this.speed;
+            }
 
         // Move the enemy
         this.x += this.speed;

@@ -122,23 +122,26 @@ export class Player extends Character{
     collisionAction() {
         // Enemy collision
         if (this.collisionData.touchPoints.other.id === "enemy") {
+            // Collision with the top of the Enemy
+            if(this.collisionData.touchPoints.other.ontop) {
+                // Kill Goomba
+                this.y -= (this.bottom * .2); //bounce
+                for(let i = 0; i<GameEnv.gameObjects.length;i++){//loop through current gameObjects
+                    if(GameEnv.gameObjects[i].isGoomba){ //look for object with (isGoomba===true) tag
+                        GameEnv.gameObjects[i].canvas.remove(); //remove goomba sprite from current level
+                        GameEnv.gameObjects.splice(i,1); //remove goomba object from current level
+                    }
+                }
+            }
             // Collision with the left side of the Enemy
-            if (this.collisionData.touchPoints.other.left) {
+            else if (this.collisionData.touchPoints.other.left) {
                 // Kill Player (Reset Game)
-               GameControl.transitionToLevel(GameEnv.levels[1]);
+               GameControl.transitionToLevel(GameEnv.levels[3]);
             }
             // Collision with the right side of the Enemy
-            if (this.collisionData.touchPoints.other.right) {
+            else if (this.collisionData.touchPoints.other.right) {
                 // Kill Player (Reset Game)
-                GameControl.transitionToLevel(GameEnv.levels[1]);
-                
-            }
-            // Collision with the top of the Enemy
-            if (this.collisionData.touchPoints.other.ontop) {
-                // Kill Goomba
-                this.y -= (this.bottom * .33);
-                // Make Mario Bounce
-                destroy = 1;
+                GameControl.transitionToLevel(GameEnv.levels[3])
             }
         }
         // Tube collision
