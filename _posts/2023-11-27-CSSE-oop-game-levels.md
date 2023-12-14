@@ -70,7 +70,8 @@ image: /images/platformer/backgrounds/hills.png
       platforms: {
         grass: { src: "/images/platformer/platforms/pigfarm.png"},
         alien: { src: "/images/platformer/platforms/alien.png" },
-        carpet: { src: "/images/platformer/platforms/carpet.jpeg"}
+        carpet: { src: "/images/platformer/platforms/carpet.jpeg"},
+        road: {src: "/images/platformer/platforms/road.png"},
       },
       thing: {
         coin: { src: "/images/Coin.png" } //Add this one!
@@ -82,8 +83,11 @@ image: /images/platformer/backgrounds/hills.png
         start: { src: "/images/platformer/backgrounds/Joke.jpg" },
         hills: { src: "/images/platformer/backgrounds/hills.png" },
         mountains: { src: "/images/platformer/backgrounds/mountains.jpg"},
-        planet: { src: "/images/platformer/backgrounds/Del_Norte.png" },
+        planet: { src: "/images/platformer/backgrounds/planet.jpg" },
+        DelNorte: { src: "/images/platformer/backgrounds/Del_Norte.png" },
         castles: { src: "/images/platformer/backgrounds/castles.png" },
+        building: {src: "/images/platformer/backgrounds/building.png"},
+        night: {src: "images/platformer/backgrounds/night.avif"},
         end: { src: "/images/platformer/backgrounds/game_over.png" },
       },
       players: {
@@ -215,7 +219,8 @@ image: /images/platformer/backgrounds/hills.png
     // Game screens
     new GameLevel( {tag: "hills", background: assets.backgrounds.hills, background2: assets.backgrounds.mountains, platform: assets.platforms.grass, platformO: assets.platformO.brick, player: assets.players.mario, tube: assets.obstacles.tube, callback: testerCallBack, thing: assets.thing.coin, } );
     new GameLevel( {tag: "school", background: assets.backgrounds.planet, platform: assets.platforms.alien, player: assets.players.lopez, enemy: assets.enemies.goomba, callback: testerCallBack } );
-    new GameLevel( {tag: "alien", background: assets.backgrounds.planet, platform: assets.platforms.alien, player: assets.players.monkey, enemy: assets.enemies.goomba, callback: testerCallBack } );
+    new GameLevel( {tag: "alien", background: assets.backgrounds.planet, platform: assets.platforms.alien, player: assets.players.monkey, callback: testerCallBack } );
+    new GameLevel( {tag: "CodeClimbers", background: assets.backgrounds.building, background2: assets.backgrounds.planet, platform: assets.platforms.road, player: assets.players.monkey, callback: testerCallBack } );
     // Game Over screen
     new GameLevel( {tag: "end", background: assets.backgrounds.end, callback: gameOverCallBack } );
 

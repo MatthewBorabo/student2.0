@@ -15,7 +15,7 @@ export class Enemy extends Character {
         // Player Data is required for Animations
         this.enemyData = enemyData;
         this.x = 0.3 * GameEnv.innerWidth;
-        this.speedChangeInterval = 3900; // Time interval to change speed (in milliseconds)
+        this.speedChangeInterval = 2500; // Time interval to change speed (in milliseconds)
         this.lastSpeedChange = Date.now(); // Track the time of the last speed change
         this.isGoomba = true;
     }
@@ -30,8 +30,8 @@ export class Enemy extends Character {
             this.speed += randomSpeedChange; // Modify the current speed by a random value
             
             // Ensure speed stays within a certain range
-            const maxSpeed = 10;
-            const minSpeed = 12;
+            const maxSpeed = 5;
+            const minSpeed = 15;
             this.speed = Math.max(Math.min(this.speed, maxSpeed), minSpeed);
             
             this.lastSpeedChange = currentTime; // Update last speed change time
