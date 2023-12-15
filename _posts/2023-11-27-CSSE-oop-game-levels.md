@@ -55,6 +55,7 @@ image: /images/platformer/backgrounds/hills.png
     import GameEnv from '{{site.baseurl}}/assets/js/platformer/GameEnv.js';
     import GameLevel from '{{site.baseurl}}/assets/js/platformer/GameLevel.js';
     import GameControl from '{{site.baseurl}}/assets/js/platformer/GameControl.js';
+    import { playMusic } from '{{site.baseurl}}/assets/js/platformer/Music.js';
 
 
     /*  ==========================================
@@ -87,7 +88,8 @@ image: /images/platformer/backgrounds/hills.png
         DelNorte: { src: "/images/platformer/backgrounds/Del_Norte.png" },
         castles: { src: "/images/platformer/backgrounds/castles.png" },
         building: {src: "/images/platformer/backgrounds/building.png"},
-        night: {src: "images/platformer/backgrounds/night.avif"},
+        night: {src: "/images/platformer/backgrounds/night.avif"},
+        rainbow: {src: "/images/platformer/backgrounds/rainbowcolors.png"},
         end: { src: "/images/platformer/backgrounds/game_over.png" },
       },
       players: {
@@ -127,6 +129,17 @@ image: /images/platformer/backgrounds/hills.png
           s: { row: 12, frames: 15 },
           d: { row: 0, frames: 15, idleFrame: { column: 7, frames: 0 } }
         },
+        // cube: {
+          // src: "/images/platformer/sprites/cubeRight.png",
+          // width: #,
+          // height: #,
+          // w: { row: 1, frames: # },
+          // wa: { row: 1, frames: # },
+          // wd: { row: 1, frames: # },
+          // a: { row: 1, frames: #, idleFrame: { column: #, frames: # } },
+          // s: { row: 1, frames: # },
+          // d: { row: 1, frames: #, idleFrame: { column: #, frames: # } }
+        // },
       },
       enemies: {
         goomba: {
@@ -179,7 +192,10 @@ image: /images/platformer/backgrounds/hills.png
       // Use waitForRestart to wait for the restart button click
       await waitForButton('startGame');
       id.hidden = true;
-      
+
+      // Play music after start game button is pressed
+      playMusic();
+
       return true;
     }
 
@@ -220,7 +236,7 @@ image: /images/platformer/backgrounds/hills.png
     new GameLevel( {tag: "hills", background: assets.backgrounds.hills, background2: assets.backgrounds.mountains, platform: assets.platforms.grass, platformO: assets.platformO.brick, player: assets.players.mario, tube: assets.obstacles.tube, callback: testerCallBack, thing: assets.thing.coin, } );
     new GameLevel( {tag: "school", background: assets.backgrounds.DelNorte, platform: assets.platforms.road, player: assets.players.lopez, enemy: assets.enemies.goomba, callback: testerCallBack } );
     new GameLevel( {tag: "alien", background: assets.backgrounds.planet, platform: assets.platforms.alien, player: assets.players.monkey, callback: testerCallBack } );
-    new GameLevel( {tag: "CodeClimbers", background: assets.backgrounds.building, background2: assets.backgrounds.planet, platform: assets.platforms.road, player: assets.players.monkey, callback: testerCallBack } );
+    new GameLevel( {tag: "CodeClimbers", background: assets.backgrounds.building, background2: assets.backgrounds.rainbow, platform: assets.platforms.road, player: assets.players.monkey, callback: testerCallBack } );
     // Game Over screen
     new GameLevel( {tag: "end", background: assets.backgrounds.end, callback: gameOverCallBack } );
 
