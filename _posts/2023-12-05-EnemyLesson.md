@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Lesson for Enemy
+title: Enemy Lesson
 type: ccc
 courses: { csse: {week: 15} }
 ---
