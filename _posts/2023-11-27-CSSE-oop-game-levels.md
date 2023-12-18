@@ -3,12 +3,12 @@ layout: base
 title: Dynamic Game Levels
 description: Early steps in adding levels to an OOP Game.  This includes basic animations left-right-jump, multiple background, and simple callback to terminate each level.
 type: ccc
-courses: { csse: {week: 14} }
+courses: { csse: {week: 14}, csp: {week: 14}, csa: {week: 14} }
 image: /images/platformer/backgrounds/hills.png
 ---
 
 <style>
-    #gameBegin, #controls, #gameOver, #navigation {
+    #gameBegin, #controls, #gameOver, #settings {
       position: relative;
         z-index: 2; /*Ensure the controls are on top*/
     }
@@ -24,10 +24,31 @@ image: /images/platformer/backgrounds/hills.png
       transition: 0.5s; /* 0.5 second transition effect to slide in the sidenav */
       background-color: black;
     }
+
+    canvas {
+    animation: fadeInAnimation ease-in 3s;
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards;
+    }
+ 
+    @keyframes fadeInAnimation {
+      0% {
+          /*translate: -100% 0;
+          rotate: -180deg;
+          */
+          clip-path: circle(0%);
+      }
+      100% {
+          /*translate: 0 0;
+          rotate: 0deg;
+          */
+          clip-path: circle(100%);
+      }
+    }
 </style>
 
-<div id="mySidenav" class="sidenav">
-  <a href="javascript:void(0)" id="toggleNavigationBar1" class="closebtn">&times;</a>
+<div id="mySidebar" class="sidenav">
+  <a href="javascript:void(0)" id="toggleSettingsBar1" class="closebtn">&times;</a>
 </div>
 
 <!-- Prepare DOM elements -->
@@ -40,9 +61,9 @@ image: /images/platformer/backgrounds/hills.png
         <!-- Background controls -->
         <button id="toggleCanvasEffect">Invert</button>
     </div>
-    <div id="navigation"> <!-- Controls -->
+    <div id="settings"> <!-- Controls -->
         <!-- Background controls -->
-        <button id="toggleNavigationBar">Navigation</button>
+        <button id="toggleSettingsBar">Settings</button>
     </div>
     <div id="gameOver" hidden>
         <button id="restartGame">Restart</button>
@@ -55,7 +76,6 @@ image: /images/platformer/backgrounds/hills.png
     import GameEnv from '{{site.baseurl}}/assets/js/platformer/GameEnv.js';
     import GameLevel from '{{site.baseurl}}/assets/js/platformer/GameLevel.js';
     import GameControl from '{{site.baseurl}}/assets/js/platformer/GameControl.js';
-    import { playMusic } from '{{site.baseurl}}/assets/js/platformer/Music.js';
 
 
     /*  ==========================================
@@ -69,31 +89,28 @@ image: /images/platformer/backgrounds/hills.png
         tube: { src: "/images/platformer/obstacles/tube.png" },
       },
       platforms: {
-        grass: { src: "/images/platformer/platforms/pigfarm.png"},
+        grass: { src: "/images/platformer/platforms/grass.png"},
+        pigfarm: { src: "/images/platformer/platforms/pigfarm.png"},
         alien: { src: "/images/platformer/platforms/alien.png" },
         carpet: { src: "/images/platformer/platforms/carpet.jpeg"},
-        road: {src: "/images/platformer/platforms/road.png"},
-      },
-      thing: {
-        coin: { src: "/images/Coin.png" } //Add this one!
-      },
-      platformO: {
-        brick: { src: "/images/platformer/platforms/brick_wall.png"},
+        redCarpet: { src: "/images/platformer/platforms/redPixel.png"}
       },
       backgrounds: {
-        start: { src: "/images/platformer/backgrounds/Joke.jpg" },
+        start: { src: "/images/platformer/backgrounds/home.png" },
+        joke: { src: "/images/platformer/backgrounds/Joke.jpg" },
         hills: { src: "/images/platformer/backgrounds/hills.png" },
-        mountains: { src: "/images/platformer/backgrounds/mountains.jpg"},
+        geometry: { src: "/images/platformer/backgrounds/GD_Background.png" },
         planet: { src: "/images/platformer/backgrounds/planet.jpg" },
-        DelNorte: { src: "/images/platformer/backgrounds/Del_Norte.png" },
+        greenPlanet: { src: "/images/platformer/backgrounds/greenPlanet.jpg" },
+        school: { src: "/images/platformer/backgrounds/Del_Norte.png" }, 
         castles: { src: "/images/platformer/backgrounds/castles.png" },
-        building: {src: "/images/platformer/backgrounds/building.png"},
-        night: {src: "/images/platformer/backgrounds/night.avif"},
-        rainbow: {src: "/images/platformer/backgrounds/rainbowcolors.png"},
+        clouds: { src: "/images/platformer/backgrounds/clouds.png" },
         end: { src: "/images/platformer/backgrounds/game_over.png" },
+        theMove: { src: "/images/platformer/backgrounds/hallway.png" },
       },
       players: {
         mario: {
+          type: 0,
           src: "/images/platformer/sprites/mario.png",
           width: 256,
           height: 256,
@@ -104,21 +121,8 @@ image: /images/platformer/backgrounds/hills.png
           s: { row: null, frames: null},
           d: { row: 2, frames: 7, idleFrame: { column: 7, frames: 0 } }
         },
-        lopez: {
-          src: "/images/platformer/sprites/lopezanimation.png", // Modify this to match your file path
-          width: 46,
-          height: 52.5,
-          idle: { row: 6, frames: 1, idleFrame: {column: 1, frames: 0} },
-          a: { row: 1, frames: 3, idleFrame: { column: 1, frames: 0 } }, // Right Movement
-          d: { row: 2, frames: 3, idleFrame: { column: 1, frames: 0 } }, // Left Movement 
-          w: {row: 3, frames: 3},
-          wa: {row: 3, frames: 3},
-          wd: {row: 3, frames: 3},
-          runningLeft: { row: 5, frames: 4, idleFrame: {column: 1, frames: 0} },
-          runningRight: { row: 4, frames: 4, idleFrame: {column: 1, frames: 0} },
-          s: {}, // Stop the movement 
-        },
         monkey: {
+          type: 0,
           src: "/images/platformer/sprites/monkey.png",
           width: 40,
           height: 40,
@@ -129,24 +133,52 @@ image: /images/platformer/backgrounds/hills.png
           s: { row: 12, frames: 15 },
           d: { row: 0, frames: 15, idleFrame: { column: 7, frames: 0 } }
         },
-        // cube: {
-          // src: "/images/platformer/sprites/cubeRight.png",
-          // width: #,
-          // height: #,
-          // w: { row: 1, frames: # },
-          // wa: { row: 1, frames: # },
-          // wd: { row: 1, frames: # },
-          // a: { row: 1, frames: #, idleFrame: { column: #, frames: # } },
-          // s: { row: 1, frames: # },
-          // d: { row: 1, frames: #, idleFrame: { column: #, frames: # } }
-        // },
+        lopez: {
+          type: 1,
+          src: "/images/platformer/sprites/lopez.png", // Modify this to match your file path
+          width: 46,
+          height: 52,
+          idle: { row: 6, frames: 3, idleFrame: {column: 1, frames: 0} },
+          a: { row: 1, frames: 3, idleFrame: { column: 1, frames: 0 } }, // Right Movement
+          d: { row: 2, frames: 3, idleFrame: { column: 1, frames: 0 } }, // Left Movement 
+          w: { row: 3, frames: 3}, // Up
+          wa: { row: 3, frames: 3},
+          wd: { row: 3, frames: 3},
+          runningLeft: { row: 5, frames: 4, idleFrame: {column: 1, frames: 0} },
+          runningRight: { row: 4, frames: 4, idleFrame: {column: 1, frames: 0} },
+          s: {}, // Stop the movement 
+        },
+        jaden: {
+          type: 0,
+          src: "/images/platformer/sprites/jaden.png",
+          width: 44,
+          height: 54,
+          w: { row: 0, frames: 0 },
+          wa: { row: 1, frames: 4 },
+          wd: { row: 0, frames: 4 },
+          a: { row: 1, frames: 4, idleFrame: { column: 3, frames: 0 } },
+          s: { row: 0, frames: 0 },
+          d: { row: 0, frames: 4, idleFrame: { column: 3, frames: 0 } }
+        },
       },
       enemies: {
         goomba: {
           src: "/images/platformer/sprites/goomba.png",
+          type: 0,
           width: 448,
           height: 452,
+        },
+        squid: {
+          src: "/images/platformer/sprites/squid.png",
+          type: 1,
+          width: 190,
+          height: 175,
+          animation: {row: 0, frames: 3},
         }
+      },
+      scaffolds: {
+          brick: { src: "/images/platformer/obstacles/brick.png" }, //need to import image
+          grass: { src: "/images/platformer/obstacles/grassScaffold.png" }, //need to import image
       },
     };
 
@@ -192,10 +224,7 @@ image: /images/platformer/backgrounds/hills.png
       // Use waitForRestart to wait for the restart button click
       await waitForButton('startGame');
       id.hidden = true;
-
-      // Play music after start game button is pressed
-      playMusic();
-
+      
       return true;
     }
 
@@ -233,10 +262,17 @@ image: /images/platformer/backgrounds/hills.png
     new GameLevel( {tag: "start", callback: startGameCallback } );
     new GameLevel( {tag: "home", background: assets.backgrounds.start, callback: homeScreenCallback } );
     // Game screens
-    new GameLevel( {tag: "hills", background: assets.backgrounds.hills, background2: assets.backgrounds.mountains, platform: assets.platforms.grass, platformO: assets.platformO.brick, player: assets.players.mario, tube: assets.obstacles.tube, callback: testerCallBack, thing: assets.thing.coin, } );
-    new GameLevel( {tag: "school", background: assets.backgrounds.DelNorte, platform: assets.platforms.road, player: assets.players.lopez, enemy: assets.enemies.goomba, callback: testerCallBack } );
-    new GameLevel( {tag: "alien", background: assets.backgrounds.planet, platform: assets.platforms.alien, player: assets.players.monkey, callback: testerCallBack } );
-    new GameLevel( {tag: "CodeClimbers", background: assets.backgrounds.building, background2: assets.backgrounds.rainbow, platform: assets.platforms.road, player: assets.players.monkey, callback: testerCallBack } );
+
+    //geometry dash background with mario character
+    new GameLevel( {tag: "geometry", background: assets.backgrounds.geometry, platform: assets.platforms.grass, player: assets.players.mario, tube: assets.obstacles.tube, scaffold: assets.scaffolds.brick, callback: testerCallBack } );
+    //monkey in an alien world
+    new GameLevel( {tag: "alien", background: assets.backgrounds.planet, platform: assets.platforms.alien, player: assets.players.monkey, enemy: assets.enemies.goomba, callback: testerCallBack } );
+    //mr lopez in a classic mario level
+    new GameLevel( {tag: "lopez", background: assets.backgrounds.clouds, background2: assets.backgrounds.hills, platform: assets.platforms.grass, scaffold: assets.scaffolds.grass, player: assets.players.lopez, enemy: assets.enemies.goomba, callback: testerCallBack } );
+    //level based on Trystan's game from last tri.
+     new GameLevel( {tag: "the move", background: assets.backgrounds.theMove, platform: assets.platforms.redCarpet, player: assets.players.jaden, enemy: assets.enemies.squid, callback: testerCallBack } );
+    //level with greenPlanet background
+     new GameLevel( {tag: "green planet", background: assets.backgrounds.greenPlanet, platform: assets.platforms.grass, player: assets.players.monkey, enemy: assets.enemies.squid, callback: testerCallBack } );
     // Game Over screen
     new GameLevel( {tag: "end", background: assets.backgrounds.end, callback: gameOverCallBack } );
 
@@ -254,24 +290,50 @@ image: /images/platformer/backgrounds/hills.png
 
 </script>
 
-<!-- navigation -->
+<!-- settings -->
 <script type="module">
   //sidebar
   var toggle = false;
   function toggleWidth(){
     toggle = !toggle;
-    document.getElementById("mySidenav").style.width = toggle?"250px":"0px";
+    document.getElementById("mySidebar").style.width = toggle?"250px":"0px";
   }
-  document.getElementById("toggleNavigationBar").addEventListener("click",toggleWidth);
-  document.getElementById("toggleNavigationBar1").addEventListener("click",toggleWidth);
+  document.getElementById("toggleSettingsBar").addEventListener("click",toggleWidth);
+  document.getElementById("toggleSettingsBar1").addEventListener("click",toggleWidth);
 
-  //generate table
+  // Generate table
   import Controller from '{{site.baseurl}}/assets/js/platformer/Controller.js';
   
   var myController = new Controller();
   myController.initialize();
 
-  var table = myController.table;
-  document.getElementById("mySidenav").append(table);
+  var table = myController.levelTable;
+  document.getElementById("mySidebar").append(table);
   
+
+  var div = myController.speedDiv;
+  document.getElementById("mySidebar").append(div);
+
+
+  var div2 = myController.gravityDiv;
+  document.getElementById("mySidebar").append(div2);
+    //for(let i=levels.length-1;i>-1;i-=1){
+    //  var row = document.createElement("tr");
+    //  var c1 = document.createElement("td");
+    //  var c2 = document.createElement("td");
+    //  c1.innerText = levels[i].tag;
+    //  if(levels[i].playerData){ //if player exists
+    //      var charImage = new Image();
+    //      charImage.src = "{{site.baseurl}}/"+levels[i].playerData.src;
+    //      //var array = levels[i].playerData.src.split("/");
+    //      //c2.innerText = array[array.length-1];
+    //      c2.append(charImage);
+    //  }
+    //  else{
+    //    c2.innerText = "none";
+    //  }
+    //  row.append(c1);
+    //  row.append(c2);
+    //  placeAfterElement.insertAdjacentElement("afterend",row);
+    //}
 </script>

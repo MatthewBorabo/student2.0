@@ -6,10 +6,9 @@ export class GameEnv {
     static gameObjects = [];
 
     // game attributes
-    static backgroundSpeed = 0;
-    static backgroundSpeed2 = 0;
-    static gameSpeed = 5;
+    static gameSpeed = 2;
     static gravity = 3;
+    static frameRate = 60;
     static innerWidth;
     static prevInnerWidth;
     static innerHeight;
@@ -20,10 +19,13 @@ export class GameEnv {
     static prevFloor;
     // calculated size properties
     static backgroundHeight = 0;
-    static platformHeight = 1;
+    static platformHeight = 0;
 
     // canvas filter property
     static isInverted = true;
+
+    //background speeds
+    static backgroundSpeed = 0;
 
     // Make the constructor private to prevent instantiation
     constructor() {

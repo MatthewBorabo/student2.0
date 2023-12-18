@@ -1,7 +1,9 @@
 import GameEnv from './GameEnv.js';
 import GameObject from './GameObject.js';
 
-export class PlatformO extends GameObject {
+export class Scaffold extends GameObject {
+    scaledScaffoldHeightRatio =  (1 / 10);
+
     constructor(canvas, image) {
         super(canvas, image, 0);
     }
@@ -17,12 +19,12 @@ export class PlatformO extends GameObject {
 
     // Set platform position
     size() {
-        // Formula for Height should be on constant ratio, using a proportion of 832
-        const scaledHeight = GameEnv.innerHeight * (60/832);
+        // Formula for Height should be on constant ratio
+        const scaledHeight = GameEnv.innerHeight * this.scaledScaffoldHeightRatio;
         // Formula for Width is scaled: scaledWidth/scaledHeight == this.width/this.height
         const scaledWidth = 150;
         const platformX = .1 * GameEnv.innerWidth;
-        const platformY = (GameEnv.bottom - scaledHeight) - 150;
+        const platformY = (GameEnv.bottom - scaledHeight) - 75;
 
         // set variables used in Display and Collision algorithms
         this.bottom = platformY;
@@ -40,4 +42,4 @@ export class PlatformO extends GameObject {
     }
 }
 
-export default PlatformO;
+export default Scaffold;
