@@ -24,6 +24,8 @@ class GameLevel {
         this.enemyData = gameObject?.enemy;
         this.tubeImg = gameObject.tube?.file;
         this.scaffoldImg = gameObject.scaffold?.file;
+        this.powerImg =  gameObject.power?.file;
+        this.powerData =  gameObject?.power;
         this.isComplete = gameObject?.callback; // function that determines if level is complete
         GameEnv.levels.push(this);
     }
@@ -53,7 +55,10 @@ class GameLevel {
         }
         if (this.scaffoldImg) {
             imagesToLoad.push(this.loadImage(this.scaffoldImg));
+        if (this.powerImg) {
+            imagesToLoad.push(this.loadImage(this.powerImg));
         }
+    }
 
         try {
             // Do not proceed until images are loaded
@@ -117,8 +122,6 @@ class GameLevel {
                     enemyCanvas.id = "enemy2";
                     new Squid(enemyCanvas, loadedImages[i], enemySpeedRatio, this.enemyData);
                 }
-                    powerCanvas.id = "power";
-                    new Mushroom(powerCanvas, loadedImages[i], powerSpeedRatio, this.powerData);
                 i++;
             }
 
@@ -137,6 +140,18 @@ class GameLevel {
                 scaffoldCanvas.id = "scaffold";
                 document.querySelector("#canvasContainer").appendChild(scaffoldCanvas);
                 new Scaffold(scaffoldCanvas, loadedImages[i]);
+                i++;
+            }
+
+            // Prepare HTML with Power Canvas (if powerImg is defined)
+            if (this.powerImg) {
+                const powerCanvas = document.createElement("canvas");
+                document.querySelector("#canvasContainer").appendChild(powerCanvas);
+                const powerSpeedRatio = 0.7;
+                if (this.powerData.type == 0){
+                    powerCanvas.id = "power";
+                    new Mushroom(powerCanvas, loadedImages[i], powerSpeedRatio, this.powerData);
+                }
                 i++;
             }
 
