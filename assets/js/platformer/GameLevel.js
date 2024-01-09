@@ -8,6 +8,7 @@ import Goomba from './Goomba.js'
 import Scaffold from './Scaffold.js';
 import Player2 from './Player2.js';
 import Squid from './Squid.js';
+import Mushroom from './Mushroom.js';
 
 // Store the assets and attributes of the Game at the specific GameLevel.
 class GameLevel {
@@ -116,6 +117,8 @@ class GameLevel {
                     enemyCanvas.id = "enemy2";
                     new Squid(enemyCanvas, loadedImages[i], enemySpeedRatio, this.enemyData);
                 }
+                    powerCanvas.id = "power";
+                    new Mushroom(powerCanvas, loadedImages[i], powerSpeedRatio, this.powerData);
                 i++;
             }
 
