@@ -190,8 +190,8 @@ image: /images/platformer/backgrounds/hills.png
         mushroom: {// fake enemy
           src: "/images/platformer/sprites/PixelMushroom.jpg",
           type: 0,
-          width: 4000,
-          height: 4000,
+          width: 736,
+          height: 736,
         }
       },
     };

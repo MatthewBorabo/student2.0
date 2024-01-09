@@ -8,7 +8,7 @@ class Mushroom extends Character{
             powerData.height)
 
         this.x = GameEnv.innerWidth/4;
-        this.scaledCharacterHeightRatio = (1/20);
+        this.scaledCharacterHeightRatio = (1/10);
         this.isMushroom = true;
     }
 
