@@ -99,20 +99,33 @@ export class Player extends Character{
         return result;
     }
     
+    // variables for dash cooldown
+    dashTimer;
+    cooldownTimer;
 
     // Player updates
     update() {
         if (this.isAnimation("a")) {
             if (this.movement.left) this.x -= this.speed;  // Move to left
+            this.facingLeft = true;
             GameEnv.backgroundSpeed = -this.speed;
         }
         if (this.isAnimation("d")) {
             if (this.movement.right) this.x += this.speed;  // Move to right
             GameEnv.backgroundSpeed = this.speed;
+            this.facingLeft = false;
         }
         if (this.isGravityAnimation("w")) {
             if (this.movement.down) this.y -= (this.bottom * .4);  // jump 11% higher than bottom
-        } 
+        }
+        if (this.isAnimation("s")) {
+            if (this.movement) { // Check if movement is allowed
+                if(this.dashTimer) {
+                    const moveSpeed = this.speed * 2;
+                    this.x += this.facingLeft ? -moveSpeed : moveSpeed;
+                }
+            }
+        }
 
         // Perform super update actions
         super.update();
@@ -208,7 +221,7 @@ export class Player extends Character{
     }
     
     // Event listener key down
-    handleKeyDown(event) {
+    handleKeyDown(event){
         if (this.playerData.hasOwnProperty(event.key)) {
             const key = event.key;
             if (!(event.key in this.pressedKeys)) {
@@ -217,11 +230,33 @@ export class Player extends Character{
                 // player active
                 this.isIdle = false;
             }
+            if (key === "a") {
+                GameEnv.backgroundSpeed2 = -0.1;
+                GameEnv.backgroundSpeed = -0.4;
+            }
+            if (key === "d") {
+                GameEnv.backgroundSpeed2 = 0.1;
+                GameEnv.backgroundSpeed = 0.4;
+            }
+        };
+        if (event.key === "s") {
+            this.canvas.style.filter = 'invert(1)';
+            this.dashTimer = setTimeout(() => {
+            // Stop the player's running functions
+            clearTimeout(this.dashTimer);
+            this.dashTimer = null;
+
+            // Start cooldown timer
+            this.cooldownTimer = setTimeout(() => {
+                clearTimeout(this.cooldownTimer);
+                this.cooldownTimer = null;
+                }, 4000);
+            }, 1000);
         }
     }
 
     // Event listener key up
-    handleKeyUp(event) {
+    handleKeyUp(event){
         if (this.playerData.hasOwnProperty(event.key)) {
             const key = event.key;
             if (event.key in this.pressedKeys) {
@@ -229,10 +264,21 @@ export class Player extends Character{
             }
             this.setAnimation(key);  
             // player idle
-            this.isIdle = true;   
-            GameEnv.backgroundSpeed = 0;  
+            this.isIdle = true;     
+        
+        if (key === "a") {
+            GameEnv.backgroundSpeed2 = 0;
+            GameEnv.backgroundSpeed = 0;
+            }
+        if (key === "d") {
+            GameEnv.backgroundSpeed2 = 0;
+            GameEnv.backgroundSpeed = 0;
+            }
         }
-    }
+        if (event.key === "s") {
+            this.canvas.style.filter = 'invert(0)'; //revert to default coloring
+        }
+    };
 
     // Override destroy() method from GameObject to remove event listeners
     destroy() {
