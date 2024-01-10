@@ -22,6 +22,9 @@ const GameControl = {
         await newLevel.load();
         GameEnv.currentLevel = newLevel;
 
+        // Play the audio
+        document.getElementById("audioElement").play();
+
         // Trigger a resize to redraw canvas elements
         window.dispatchEvent(new Event('resize'));
         // Update invert property, twice means same as before

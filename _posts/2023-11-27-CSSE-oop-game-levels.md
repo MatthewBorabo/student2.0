@@ -69,6 +69,9 @@ image: /images/platformer/backgrounds/hills.png
     <div id="gameOver" hidden>
         <button id="restartGame">Restart</button>
     </div>
+    <audio id="audioElement" loop hidden>
+      <source id="mp3Source">
+    </audio>
 </div>
 <div id="score" style= "position: absolute; top: 75px; left: 10px; color: black; font-size: 20px; background-color: #dddddd; padding-left: 5px; padding-right: 5px;">
     Time: <span id="timeScore">0</span>
@@ -185,6 +188,11 @@ image: /images/platformer/backgrounds/hills.png
       scaffolds: {
           brick: { src: "/images/platformer/obstacles/brick.png" }, //need to import image
           grass: { src: "/images/platformer/obstacles/grassScaffold.png" }, //need to import image
+      },
+      audio: {
+          pokemon: { src: "/assets/audio/TestingMusic.mp3" },
+          space: { src: "/audio/platformer/space.mp3" },
+          honor: { src: "/audio/platformer/honor.mp3" },
       },
       powers: {
         mushroom: {// fake enemy
@@ -373,7 +381,7 @@ document.getElementById('leaderboardButton').addEventListener('click', showLeade
     // Game screens
 
     //geometry dash background with mario character
-    new GameLevel( {tag: "geometry", background: assets.backgrounds.geometry, platform: assets.platforms.grass, player: assets.players.mario, tube: assets.obstacles.tube, scaffold: assets.scaffolds.brick, power: assets.powers.mushroom, callback: testerCallBack } );
+    new GameLevel( {tag: "geometry", background: assets.backgrounds.geometry, platform: assets.platforms.grass, player: assets.players.mario, tube: assets.obstacles.tube, scaffold: assets.scaffolds.brick, audio: assets.audio.pokemon, power: assets.powers.mushroom, callback: testerCallBack } );
     //monkey in an alien world
     new GameLevel( {tag: "alien", background: assets.backgrounds.planet, platform: assets.platforms.alien, player: assets.players.monkey, enemy: assets.enemies.goomba, callback: testerCallBack } );
     //mr lopez in a classic mario level
