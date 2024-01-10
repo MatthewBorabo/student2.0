@@ -380,9 +380,9 @@ document.getElementById('leaderboardButton').addEventListener('click', showLeade
     // Game screens
 
     //geometry dash background with mario character
-    new GameLevel( {tag: "geometry", background: assets.backgrounds.geometry, platform: assets.platforms.grass, player: assets.players.mario, tube: assets.obstacles.tube, scaffold: assets.scaffolds.brick, power: assets.powers.mushroom, callback: testerCallBack } );
+    new GameLevel( {tag: "geometry", background: assets.backgrounds.geometry, platform: assets.platforms.grass, player: assets.players.mario, tube: assets.obstacles.tube, scaffold: assets.scaffolds.brick, audio: assets.audio.geometry, power: assets.powers.mushroom, callback: testerCallBack } );
     //monkey in an alien world
-    new GameLevel( {tag: "alien", background: assets.backgrounds.planet, platform: assets.platforms.alien, player: assets.players.monkey, enemy: assets.enemies.goomba, callback: testerCallBack } );
+    new GameLevel( {tag: "alien", background: assets.backgrounds.planet, platform: assets.platforms.alien, player: assets.players.monkey, enemy: assets.enemies.goomba, audio: assets.audio.geometry, callback: testerCallBack } );
     //mr lopez in a classic mario level
     new GameLevel( {tag: "lopez", background: assets.backgrounds.clouds, background2: assets.backgrounds.hills, platform: assets.platforms.grass, scaffold: assets.scaffolds.grass, player: assets.players.lopez, enemy: assets.enemies.goomba, callback: testerCallBack } );
     //level based on Matthew and Ian's game from last tri.
@@ -390,7 +390,7 @@ document.getElementById('leaderboardButton').addEventListener('click', showLeade
     //level based on Trystan's game from last tri.
      new GameLevel( {tag: "the move", background: assets.backgrounds.theMove, platform: assets.platforms.redCarpet, player: assets.players.jaden, enemy: assets.enemies.squid, callback: testerCallBack } );
     //level with greenPlanet background
-     new GameLevel( {tag: "green planet", background: assets.backgrounds.greenPlanet, platform: assets.platforms.grass, player: assets.players.monkey, enemy: assets.enemies.squid, audio: assets.audio.pokemon, callback: testerCallBack } );
+     new GameLevel( {tag: "green planet", background: assets.backgrounds.greenPlanet, platform: assets.platforms.grass, player: assets.players.monkey, enemy: assets.enemies.squid, audio: assets.audio.pokemon callback: testerCallBack } );
     // Game Over screen
     new GameLevel( {tag: "end", background: assets.backgrounds.end, callback: gameOverCallBack } );
 
