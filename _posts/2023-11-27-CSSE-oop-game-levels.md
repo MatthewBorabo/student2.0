@@ -381,6 +381,8 @@ document.getElementById('leaderboardButton').addEventListener('click', showLeade
 
     //geometry dash background with mario character
     new GameLevel( {tag: "geometry", background: assets.backgrounds.geometry, platform: assets.platforms.grass, player: assets.players.mario, tube: assets.obstacles.tube, scaffold: assets.scaffolds.brick, audio: assets.audio.geometry, power: assets.powers.mushroom, callback: testerCallBack } );
+    //del norte with lopez
+    new GameLevel( {tag: "school", background: assets.backgrounds.school, platform: assets.platforms.redcarpet, player: assets.players.lopez, enemy: assets.enemies.goomba, audio: assets.audio.geometry, callback: testerCallBack } );
     //monkey in an alien world
     new GameLevel( {tag: "alien", background: assets.backgrounds.planet, platform: assets.platforms.alien, player: assets.players.monkey, enemy: assets.enemies.goomba, audio: assets.audio.geometry, callback: testerCallBack } );
     //mr lopez in a classic mario level
