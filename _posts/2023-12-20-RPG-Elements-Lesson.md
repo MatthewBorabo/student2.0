@@ -2,8 +2,8 @@
 layout: post
 toc: true
 title: RPG Elements Lesson
-type: plans
-courses: { compsci: {week: 17} }
+type: collab
+courses: { compsci: {week: 18} }
 authors: Maryam Abdul-Aziz, Zidane Ahmed, Abi Besufekad, Gavin Ireland
 ---
 
