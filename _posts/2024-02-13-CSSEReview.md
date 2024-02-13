@@ -1,9 +1,9 @@
 ---
 layout: base
-title: Multiplayer Progress
+title: asdf
 description: Starting to work on Multiplayer!
 type: collab
-courses: { csse: {week: 19} }
+courses: { csse: {week: 20} }
 ---
 
 - Still working on Multiplayer! We made the local server!

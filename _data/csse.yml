@@ -41,6 +41,26 @@ introduction_tools: &introduction_tools |
     +-----------------+
 
 # CSSE course meta data
+Sprint0:
+   title: Preparation for CSSE
+   description:
+   start: -1
+   end: -1
+Sprint1:
+  title: Build a Lab Notebook
+  description:  Install Tools.  Design lab notebook.  Learn GitHub Pages. Work with your pair (Ian Manangan). 
+  start: 0
+  end: 3
+Sprint2:
+  title: Learn Language
+  description: Learn (JavaScript|Python|Java).  Start Agile development process.
+  start: 4
+  end: 6
+Sprint3: 
+  title: Building a Web Application with GitHub Pages for N@tM
+  description: Get ready for Night At the Museum!
+  start: 7
+  end: 12
 Sprint4:
   title: OOP Programming Fundamentals
   description: Students, in pairs, will work on converting Mario game to OOP.  There will be a series of Tech Talks to support this activity.
@@ -55,4 +75,4 @@ Sprint6:
   title: Create a Final Project and N@tM 
   description: Trimester 2 concludes with student presenting their CPT project at N@tM.  Each person within "Student Teams" will have their own specialty within the student project that satisfied all their Create Performance Task requirements.   Student should be able to talk about design, coding, and present features of their portion of the system.
   start: 18
-  end: 24
+  end: 20
