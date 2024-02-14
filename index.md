@@ -204,7 +204,7 @@ I am currently interested in the field of Computer Science, leading me to take C
   - Period 1 - AP Physics C: Mechanics (Mr. Liao)
   - Period 2 - US History 1 (Mrs. Smith)
   - Period 3 - Calculus 1 (Mrs. Hightower)
-  - Period 4 - Computer Science and Softer Engineering (Mr. Mortensen)
+  - Period 4 - Computer Science and Software Engineering (Mr. Mortensen)
   - Period 5 - Learning Stratiegies (Ms. Camerino)
 
 ## Overall Goal for this Class
