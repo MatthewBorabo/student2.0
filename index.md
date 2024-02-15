@@ -210,11 +210,42 @@ I am currently interested in the field of Computer Science, leading me to take C
 ## Overall Goal for this Class
  I hope I will be able to get a good grade in this class, no matter how much time that I will have to spend in and out of class. It may be a slow start to learn all about the terminal and basic coding fundamentals, but I will eventually be able to show that I am capable of being a good coder! :D
 
+## Accomplishments:
+
+### *CODECLIMBERS*
+
+<img src="images/asdf.png" alt="CodeClimbers Game" style="width:25%;length:25%">
+
+- Trimester 1 Project by Gavin Copley, Matthew Sean Borabo, Ian Manangan, and John Crooks.
+- Made designs
+- Added an opening cutscene
+- Debugging
+- Made review tickets
+- Tweaking game values
+- Fixed a glitch with double jumping
+- Added a keybind for jumping (space key)
+
+### *MARIO PLATFORMER GAME *(MULTIPLAYER)*
+
+<img src="images/asdf.png" alt="Mario Game" style="width:25%;length:25%">
+- Trimester 2 Project (Multiplayer Group) by Trystan Schmits, Gavin Ireland, Matthew Sean Borabo, and Ian Manangan.
+- Specific Page for Mario Game:
+- Being Trystan's Personal Assistant >_>
+- Made the Socket Class (set-up for Multiplayer)
+- Added the original Multiplayer Button
+- Added the Enter Keybind for Chat
+- Managed AWS (Amazon Web Services)
+- 
+
+
 ## About My First Partner!
 
 <img src="images/IMG_0666.jpeg" alt="Snow" style="width:25%;length:25%">
 
 <br> My partner is Ian and I’ve known ever since we were in elementary school! His favorite sport is volleyball as it has many dynamics and strategies to the game! He is a sophomore and he plays a variety of video games such as Apex Legends, Valorant, and sometimes Pokemon. He is very friendly and kind, especially when I met him for the first time during my 2nd year of elementary school. I’m glad that he is my teammate for the entire trimester and I hope to know more about him during this course! :D
+
+## My Best Friend!
+
 
 - Plans, Lists, [Scrum Boards](https://clickup.com/blog/scrum-board/) help you to track key events, show progress and record time.  Effort is a big part of your class grade.  Show plans and time spent!
 - [Hacks(Todo)](https://levelup.gitconnected.com/six-ultimate-daily-hacks-for-every-programmer-60f5f10feae) enable you to stay in focus with key requirements of the class.  Each Hack will produce Tangibles.
