@@ -4,5 +4,5 @@ title: About Us
 permalink: /about/
 ---
 
-Creator of this Repository:
+Creator of this Website:
 Matthew Sean Borabo

@@ -212,9 +212,9 @@ I am currently interested in the field of Computer Science, leading me to take C
 
 ## Accomplishments:
 
-### *CODECLIMBERS*
+### <a href="https://gavincopley.github.io/sharedGame/home">*CubeClimbers*</a>
 
-<img src="images/asdf.png" alt="CodeClimbers Game" style="width:25%;length:25%">
+<img src="images/CodeClimbers.png" alt="CubeClimbers" style="width:100%;length:100%">
 
 - Trimester 1 Project by Gavin Copley, Matthew Sean Borabo, Ian Manangan, and John Crooks.
 - Made designs
@@ -225,9 +225,9 @@ I am currently interested in the field of Computer Science, leading me to take C
 - Fixed a glitch with double jumping
 - Added a keybind for jumping (space key)
 
-### *MARIO PLATFORMER GAME *(MULTIPLAYER)*
+### <a href="https://nighthawkcoders.github.io/game_levels_mp/2024/01/08/CSSE-oop-game-levels2.html">*Mario Platformer Game (Multiplayer)*</a>
 
-<img src="images/asdf.png" alt="Mario Game" style="width:25%;length:25%">
+<img src="images/Teacher3.0MultiplayerTeaser.png" alt="Multiplayer" style="width:100%;length:100%">
 - Trimester 2 Project (Multiplayer Group) by Trystan Schmits, Gavin Ireland, Matthew Sean Borabo, and Ian Manangan.
 - Specific Page for Mario Game:
 - Being Trystan's Personal Assistant >_>
@@ -235,7 +235,6 @@ I am currently interested in the field of Computer Science, leading me to take C
 - Added the original Multiplayer Button
 - Added the Enter Keybind for Chat
 - Managed AWS (Amazon Web Services)
-- 
 
 
 ## About My First Partner!
@@ -244,9 +243,13 @@ I am currently interested in the field of Computer Science, leading me to take C
 
 <br> My partner is Ian and I’ve known ever since we were in elementary school! His favorite sport is volleyball as it has many dynamics and strategies to the game! He is a sophomore and he plays a variety of video games such as Apex Legends, Valorant, and sometimes Pokemon. He is very friendly and kind, especially when I met him for the first time during my 2nd year of elementary school. I’m glad that he is my teammate for the entire trimester and I hope to know more about him during this course! :D
 
-## My Best Friend!
+## My Best Friend (along with Ian)!
 
+<img src="images/TrystanMatthewBurgerLounge.webp" alt="Snow" style="width:25%;length:25%">
 
+<br> My best friend is Trystan and I've known him ever since we were 5th grade. He was originally from St. Louis and moved from several different schools, and it seems that Stone Ranch Elementary School was his stopping point, because we've been friends ever since. He is a code wizz, starting from scripting an airplane in Roblox Lua, from having flying colors in CSSE. His passion for programming is endless, even coding 6 hours straight AFTER SCHOOL, IN THE SCHOOL. I'm impressed with his skills and I hope to have similar set skills like him as well!
+
+## Tools for CSSE
 - Plans, Lists, [Scrum Boards](https://clickup.com/blog/scrum-board/) help you to track key events, show progress and record time.  Effort is a big part of your class grade.  Show plans and time spent!
 - [Hacks(Todo)](https://levelup.gitconnected.com/six-ultimate-daily-hacks-for-every-programmer-60f5f10feae) enable you to stay in focus with key requirements of the class.  Each Hack will produce Tangibles.
 - Tangibles or [Tangible Artifacts](https://en.wikipedia.org/wiki/Artifact_(software_development)) are things you accumulate as a learner and coder. 
