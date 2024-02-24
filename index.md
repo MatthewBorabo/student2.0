@@ -263,3 +263,5 @@ Explore the Computer Science Pathway at Del Norte High School. All Del Norte Com
 - Course learning includes Coding Languages, DevOps, GitHub, Research and Ceativity
 - Student teams practice Agile Development Methodologies: planning, communication, collaboration
 - Class lab time provided and approximately 2-3 hours of homework per week
+
+<img src="images/IMG_0566.jpg" alt="Snow" style="width:100%;length:100%">
