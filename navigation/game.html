@@ -1,177 +1,182 @@
 ---
-hide: true
 layout: base
-image: /images/alien_planet.jpg
-images:
-  background:
-    src: /images/alien_planet2.jpg
-  platform:
-    src: /images/platform.png
-  dog:
-    src: /images/dogSprite.png
-  monkey:
-    src: /images/monkeySprite.png
-  vader:
-    src: /images/vaderSprite.png
+image: /images/platformer/backgrounds/home.png
 ---
-<!-- Liquid code, run by Jekyll, used to define location of asset(s) -->
-{% assign backgroundFile = site.baseurl | append: page.images.background.src %}
-{% assign platformFile = site.baseurl | append: page.images.platform.src %}
-{% assign dogSpriteImage = site.baseurl | append: page.images.dog.src %}
-{% assign monkeySpriteImage = site.baseurl | append: page.images.monkey.src %}
-{% assign vaderSpriteImage = site.baseurl | append: page.images.vader.src %}
 
-<style>
-    #controls {
-        position: relative;
-        z-index: 2; /* Ensure the controls are on top */
-    }
-</style>
+<!-- Syle is now located, as of Jan 2024 v2.0, in _sass/minima/platformer-styles.scss -->
 
-<!-- Prepare DOM elements -->
-<!-- Wrap both the dog canvas and controls in a container div -->
-<div id="canvasContainer">
-    <div id="controls"> <!-- Controls -->
-        <!-- Background controls -->
-        <button id="toggleCanvasEffect">Invert</button>
-        <!-- Dog controls -->
-        <input type="radio" name="animation" id="idle">
-        <label for="idle">Idle</label>
-        <input type="radio" name="animation" id="barking">
-        <label for="barking">Barking</label>
-        <input type="radio" name="animation" id="walking" checked>
-        <label for="walking">Walking</label>
-    </div>
+<!-- DOM Settings Panel (sidebar id and div), managed by SettingsContro.js -->
+<div id="sidebar" class="sidebar">
+  <a href="javascript:void(0)" id="sidebar-header">&times; Settings</a>
+</div>
+<div id="leaderboardDropDown" class="leaderboardDropDown">
+  <a href="javascript:void(0)" id="leaderboard-header">&times; Leaderboard</a>
 </div>
 
+<!--Audio for Mushroom -->
+<audio id="Mushroom" src="{{site.baseurl}}/assets/audio/Mushroom.mp3" preload="auto"></audio>
+
+<!--Audio for Death of Goomba -->
+<audio id="goombaDeath" src="{{site.baseurl}}/assets/audio/goomba-death.mp3" preload="auto"></audio>
+
+<!--Audio for Jump oF player -->
+<audio id ="PlayerJump" src="{{site.baseurl}}/assets/audio/mario-jump.mp3" preload="auto"></audio>
+
+<!--Audio for death of player -->
+<audio id ="PlayerDeath" src="{{site.baseurl}}/assets/audio/MarioDeath.mp3" preload="auto"></audio>
+
+<!--Audio for coin collection -->
+<audio id ="coin" src="{{site.baseurl}}/assets/audio/coin.mp3" preload="auto"></audio>
+
+
+<!-- Wrap both the controls and gameplay in a container div -->
+<div id="canvasContainer">
+  <div class="submenu">
+    <div id="score">
+        Timer: <span id="timeScore">0</span>
+    </div>
+    <div id="gameBegin" hidden>
+        <button id="startGame">Start Game</button>
+    </div>
+    <div id="gameOver" hidden>
+        <button id="restartGame">Restart</button>
+    </div>
+    <div id="settings"> <!-- Controls -->
+        <!-- Background controls -->
+        <button id="settings-button">Settings</button>
+    </div>
+    <div id="leaderboard"> <!-- Controls -->
+        <button id="leaderboard-button">Leaderboard</button>
+    </div>
+  </div>
+  <!-- JavaScript-generated canvas items are inserted here -->
+</div>
+
+<div id="container">
+    <header class="fun_facts">
+    <p id="num">Fun Fact #0</p>
+    <h3 id="fun_fact">Mario is named after frustrated landlord, Mario Segale, of the Nintendo of America building.</h3> <!-- want to access later so have id-->
+    </header>
+  </div>
+
+<footer id="cut-story"></footer>
+
 <script type="module">
-    import GameEnv from '{{site.baseurl}}/assets/js/alienWorld/GameEnv.js';
-    import GameObject from '{{site.baseurl}}/assets/js/alienWorld/GameObject.js';
-    import Background from '{{site.baseurl}}/assets/js/alienWorld/Background.js';
-    import Character from '{{site.baseurl}}/assets/js/alienWorld/Character.js';
-    import { initPlatform } from '{{site.baseurl}}/assets/js/alienWorld/Platform.js';
-    import { initDog } from '{{site.baseurl}}/assets/js/alienWorld/CharacterDog.js';
-    import { initMonkey } from '{{site.baseurl}}/assets/js/alienWorld/CharacterMonkey.js';
-    import { initVader } from '{{site.baseurl}}/assets/js/alienWorld/CharacterVader.js';
+    // Imports to drive game
+    import GameSetup from '{{site.baseurl}}/assets/js/platformer2/GameSetup.js';
+    import GameControl from '{{site.baseurl}}/assets/js/platformer2/GameControl.js';
+    import SettingsControl from '{{site.baseurl}}/assets/js/platformer2/SettingsControl.js';
+    import GameEnv from '{{site.baseurl}}/assets/js/platformer2/GameEnv.js';
+    import Leaderboard from '{{site.baseurl}}/assets/js/platformer2/Leaderboard.js';
+    import Audio from '{{site.baseurl}}/assets/js/platformer2/Audio.js';
 
-    // Create a function to load an image and return a Promise
-    async function loadImage(src) {
-        return new Promise((resolve, reject) => {
-        const image = new Image();
-        image.src = src;
-        image.onload = () => resolve(image);
-        image.onerror = reject;
-        });
-    }
+    /* 
+     * ==========================================
+     * ========== Game Setup ====================
+     * ==========================================
+     * Game Setup prepares the Game Levels and Objects
+     * 1.) There are one-to-many GameLevels in a Game
+     * 2.) Each GameLevel has one-to-many GameObjects
+     * ==========================================
+    */
 
-    // Game loop
-    function gameLoop() {
-        for (var gameObj of GameObject.gameObjectArray){
-            gameObj.update();
-            gameObj.draw();
-        }
-        requestAnimationFrame(gameLoop);  // cycle game, aka recursion
-    }
+    // Setup game data, the objects and levels
+    GameSetup.initLevels("{{site.baseurl}}"); 
 
-    // Window resize
-    window.addEventListener('resize', function () {
-        GameEnv.setGameEnv();  // Update GameEnv dimensions
+    /* 
+     * ==========================================
+     * ========== Game Control ==================
+     * ==========================================
+     * Game Control starts the game loop and activates game objects
+     * 1.) GameControl cycles through GameLevels
+     * 2.) Each GameLevel is on a looping timer, called within the game loop 
+     * 3.) The game loop allows the game player (user), to interact with the game objects 
+     * 4.) A timer (or score) tracks the time of user interaction within the game
+     * ==========================================
+    */
 
-        // Call the sizing method on all game objects
-        for (var gameObj of GameObject.gameObjectArray){
-            gameObj.size();
-        }
-    });
+    // Start the PRIMARY game loop
+   GameControl.gameLoop();
 
-    // Toggle "canvas filter property" between alien and normal
-    var isFilterEnabled = false;
-    const defaultFilter = getComputedStyle(document.documentElement).getPropertyValue('--default-canvas-filter');
-    toggleCanvasEffect.addEventListener("click", function () {
-        for (var gameObj of GameObject.gameObjectArray){
-            if (gameObj.invert && isFilterEnabled) {  // toggle off
-                gameObj.canvas.style.filter = "none";  // remove filter
-            } else if (gameObj.invert) { // toggle on
-                gameObj.canvas.style.filter = defaultFilter;  // remove filter
-            } else {
-                gameObj.canvas.style.filter = "none";  // remove filter
-            }
-        }
-        isFilterEnabled = !isFilterEnabled;  // switch boolean value
-    });
-  
+    // Create an async event to start the timer when the start game button is pushed
+    var y = document.getElementById("cut-story");
+    y.style.display = "none";
+    document.getElementById('startGame').addEventListener('click', () => {
+        GameControl.startTimer(); 
+        var x = document.getElementById("container");
+        if (x.style.display === "none") {
+          x.style.display = "block";
+          } 
+        else {
+          x.style.display = "none";
+          }
+        if (y.style.display === "none") {
+          y.style.display = "block";
+          } 
+        else {
+          y.style.display = "none";
+          }
+      
+        let cutStory = document.getElementById('cut-story');
+        let messages = ["Hi! My name is Mario, and I wish...", 
+        "I wish I could be just as cool as this guy, Mr. Lopez.", "Help me get to the next level to become him!","This game was provided by CompSci Inc.","Stomp on Mushroom to get 3 seconds off your total time!","Turn on multiplayer from the settings tab to play with others."];
 
-    // Setup and store Game Objects
-    async function setupGame() {   
-        try {
-            // Open image files for Game Objects
-            const [backgroundImg, platformImg, dogImg, monkeyImg, vaderImg] = await Promise.all([
-                loadImage('{{backgroundFile}}'),
-                loadImage('{{platformFile}}'),
-                loadImage('{{dogSpriteImage}}'),
-                loadImage('{{monkeySpriteImage}}'),
-                loadImage('{{vaderSpriteImage}}')
-            ]);
+        //if let messages = ("Stomp on Mushroom to get 3 seconds off your total time!")
+        //GameEnv.messages = true;
+      
 
-            // Setup Globals
-            GameEnv.gameSpeed = 2;
-            GameEnv.gravity = 3;
-
-            // Prepare HTML with Background Canvas
-            const backgroundCanvas = document.createElement("canvas");
-            backgroundCanvas.id = "background";
-            document.querySelector("#canvasContainer").appendChild(backgroundCanvas);
-            // Background object
-            const backgroundSpeedRatio = 0.2
-            new Background(backgroundCanvas, backgroundImg, backgroundSpeedRatio);  // Background Class calls GameObject Array which stores the instance
-
-            // Prepare HTML with Platform Canvas
-            const platformCanvas = document.createElement("canvas");
-            platformCanvas.id = "platform";
-            document.querySelector("#canvasContainer").appendChild(platformCanvas);
-            // Platform object
-            const platformSpeedRatio = 0.2;
-            initPlatform(platformCanvas, platformImg, platformSpeedRatio);
-
-            // Prepare HTML with Dog Canvas
-            const dogCanvas = document.createElement("canvas");
-            dogCanvas.id = "characters";
-            document.querySelector("#canvasContainer").appendChild(dogCanvas);
-            // Dog object
-            const dogSpeedRatio = 0.2
-            initDog(dogCanvas, dogImg, dogSpeedRatio, document.getElementById("controls"));
-
-            // Prepare HTML with Monkey Canvas
-            const monkeyCanvas = document.createElement("canvas");
-            monkeyCanvas.id = "characters";
-            document.querySelector("#canvasContainer").appendChild(monkeyCanvas);
-            // Monkey object
-            const monkeySpeedRatio = 0.7
-            initMonkey(monkeyCanvas, monkeyImg, monkeySpeedRatio);              
- 
-            // Prepare HTML with Vader Canvas
-            const vaderCanvas = document.createElement("canvas");
-            vaderCanvas.id = "characters";
-            document.querySelector("#canvasContainer").appendChild(vaderCanvas);
-            // Vader object
-            const vaderSpeedRatio = 0
-            initVader(vaderCanvas, vaderImg, vaderSpeedRatio); 
-
-            //var platform = new Platform(0, GameEnv.bottom - 50, GameEnv.innerWidth, 10);
         
-        // Trap errors on failed image loads
-        } catch (error) {
-            console.error('Failed to load one or more images:', error);
+
+        function showMessage(){
+            var x = cutStory;
+            x.className = 'show'; // change class name to show
+            //only want to last 3 secs
+            setTimeout(function(){x.className = x.className.replace('show',' ');}, 2000); //replace show with an empty string
+             setTimeout(function(){x.className = x.className.replace(' ','hide');}, 2000);
+            console.log("class name after: "+x.className);
         }
-    }
-  
-    // Call and wait for Game Objects to be ready
-    await setupGame();
+        
+        let i = 0;
+        let interval = setInterval(() => 
+        {
+          cutStory.innerText = messages[i]; 
+          showMessage();
+          i++;
+          if(i==messages.length){
+            clearInterval(interval)
+          }
+        }, 3000);
+    
+    
+    
+    });
+    /* 
+    * ==========================================
+    * ========== Settings Control ==============
+    * ==========================================
+    * Settings Control provides the ability to select game level and change game settings
+    * 1.) SettingsControl must be after GameControl, it depends on GameLevels 
+    * 2.) GameControl extends and implements LocalStorage to support the persistence of user data
+    * 3.) Modifications can be made to User ID, GameSpeed, Gravity, and Invert(ing) screen color
+    * ==========================================
+    */
 
-    // Trigger a resize at start up
-    window.dispatchEvent(new Event('resize'));
-    toggleCanvasEffect.dispatchEvent(new Event('click'));
+    // Construct settings sidebar, MVC variable paradigm, and async events to trigger user interaction
+    SettingsControl.sidebar();
+    
+    Leaderboard.leaderboardDropDown();
 
-    // Start the game
-    gameLoop();
+    /* 
+     * ==========================================
+     *  ========== Event / Listeners =============
+     *  ==========================================
+     * System Event listeners
+     * 1.) Window resize and GameEnv.resize trigger system updates
+     * 2.) Most event listeners remain near impacting functions
+     * ==========================================
+    */
+
+    // Game refresh is required when the height and width of the screen are impacted
+    window.addEventListener('resize', GameEnv.resize);
 
 </script>
