@@ -43,8 +43,12 @@ Rift is an RPG game made in CSA which utilizes AI. It can track your gaming stat
 
 During my visit in Night at the Museum, the colors and the pathway in the photo caught my eye. The details of the flowers are very stunning and is very fond of nature.
 
-
-
-
-
-
+<!-- from https://github.com/utterance/utterances -->
+<script src="https://utteranc.es/client.js"
+        repo="{{ site.github_username }}/{{ site.github_repo | default: site.baseurl | remove: "/" }}"
+        issue-term="title"
+        label="blogpost-comment"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+</script>
