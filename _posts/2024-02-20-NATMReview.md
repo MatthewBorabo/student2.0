@@ -5,20 +5,11 @@ type: devops
 courses: { csse: {week: 20} }
 ---
 
-Blog / article on you and team
-
-
-
-something you saw in CompSci that impressed
-something you saw outside of CompSci that you liked
-
 # Night At the Museum
 
 ## Who Are We?
 
 We are the MULTIPLAYERS!
-
-<img src="images/IMG_0566.jpg" alt="Multiplayers" style="width:100%;length:100%">
 
 ### Multiplayer:
 - Trystan Schmits
@@ -26,7 +17,7 @@ We are the MULTIPLAYERS!
 - Ian Manangan
 - Gavin Ireland
 
-![Multiplayers](../images/IMG_0566.jpg)
+![Multiplayers](https://matthewborabo.github.io/student2.0/images/IMG_0566.jpg)
 
 ### Helpers:
 - Management Overseer: Ryan Nguyen
@@ -40,7 +31,17 @@ We are the MULTIPLAYERS!
 
 ## Outside of CSSE
 
+### <a href="https://codemaxxers.github.io/codemaxxerFrontend/">*Rift*</a>
+
 ![Rift](https://codemaxxers.github.io/codemaxxerFrontend/images/battle.png)
+
+Rift is an RPG game made in CSA which utilizes AI. It can track your gaming stats such as your account points, and you can sign up using your email, username, and a profile picture!
+
+### Photography
+
+![Brandon Cheah](https://private-user-images.githubusercontent.com/47646488/305490251-9118d41a-49c6-419b-a4d0-822fdc800db7.png?jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3MDg4MTk5NDcsIm5iZiI6MTcwODgxOTY0NywicGF0aCI6Ii80NzY0NjQ4OC8zMDU0OTAyNTEtOTExOGQ0MWEtNDljNi00MTliLWE0ZDAtODIyZmRjODAwZGI3LnBuZz9YLUFtei1BbGdvcml0aG09QVdTNC1ITUFDLVNIQTI1NiZYLUFtei1DcmVkZW50aWFsPUFLSUFWQ09EWUxTQTUzUFFLNFpBJTJGMjAyNDAyMjUlMkZ1cy1lYXN0LTElMkZzMyUyRmF3czRfcmVxdWVzdCZYLUFtei1EYXRlPTIwMjQwMjI1VDAwMDcyN1omWC1BbXotRXhwaXJlcz0zMDAmWC1BbXotU2lnbmF0dXJlPWU5YTNkNGM2NjA4N2UwNTcyZDg0NDRiYjdlNWJjMmNlNGU0OTRmMDdiMWFmMTNhMzdlZTEzNDZmMDc0MjQzMTAmWC1BbXotU2lnbmVkSGVhZGVycz1ob3N0JmFjdG9yX2lkPTAma2V5X2lkPTAmcmVwb19pZD0wIn0.BmU7SMgPicn6E3n9HU7e5z_HHN89Zmek2n9uvgJMBg8)
+
+During my visit in Night at the Museum, the colors and the pathway in the photo caught my eye. The details of the flowers are very stunning and is very fond of nature.
 
 
 
