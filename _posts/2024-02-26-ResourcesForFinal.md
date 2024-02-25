@@ -10,13 +10,13 @@ courses: {'csse': {'week': 20}}
 
 ### <a href="https://matthewborabo.github.io/student2.0//2023/08/31/Snake.html">*Snake*</a>
 
-### <a href="https://gavincopley.github.io/sharedGame/home">*CubeClimbers*</a>
+### <a href="https://gavincopley.github.io/sharedGame/home">*CubeClimbers*</a> (Still need to implement to this repo/website)
 
 ## Trimester 2 Game
 
 ### <a href="https://matthewborabo.github.io/student2.0//2023/11/27/CSSE-oop-game-levels.html">*Mario Game (Pre-Multiplayer)*</a>
 
-### <a href="https://matthewborabo.github.io/student2.0//2023/11/27/CSSE-oop-game-levels.html">*Mario Game (Final)*</a>
+### <a href="https://matthewborabo.github.io/student2.0/navigation/game">*Mario Game (Final)*</a>
 
 ## *Requirements:*
 

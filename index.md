@@ -225,7 +225,7 @@ I am currently interested in the field of Computer Science, leading me to take C
 - Fixed a glitch with double jumping
 - Added a keybind for jumping (space key)
 
-### <a href="https://nighthawkcoders.github.io/game_levels_mp/2024/01/08/CSSE-oop-game-levels2.html">*Mario Platformer Game (Multiplayer)*</a>
+### <a href="https://matthewborabo.github.io/student2.0/navigation/game">*Mario Platformer Game (Multiplayer)*</a>
 
 <img src="images/Teacher3.0MultiplayerTeaser.png" alt="Multiplayer" style="width:100%;length:100%">
 - Trimester 2 Project (Multiplayer Group) by Trystan Schmits, Gavin Ireland, Matthew Sean Borabo, and Ian Manangan.
