@@ -32,7 +32,7 @@ Make your own level to the Multiplayer Platformer Game Level (Level 4).
 - Original Enemies (Squarey, Rainbowy)
 - Platform/Ground
 - Player Sprite (Cubey) [WIP]
-
+- OFF-TOPIC: Added a new fun fact (Fun Fact #10) ;)
 <!-- from https://github.com/utterance/utterances -->
 <script src="https://utteranc.es/client.js"
         repo="{{ site.github_username }}/{{ site.github_repo | default: site.baseurl | remove: "/" }}"
