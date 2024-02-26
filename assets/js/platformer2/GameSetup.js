@@ -177,6 +177,7 @@ const GameSetup = {
         alien: { src: "/images/platformer/platforms/alien.png" },
         bricks: { src: "/images/platformer/platforms/brick_wall.png" },
         block: { src: "/images/platformer/platforms/brick_block.png" }, //MAY need 3 new variables: sizeRatio, widthRatio, and heightRatio
+        road: { src: "/images/platformer/platforms/road.png" },
         itemBlock: {
           src: "/images/platformer/platforms/mario_block_spritesheet_v2.png",
           sizeRatio: 83.2,
@@ -196,9 +197,12 @@ const GameSetup = {
         clouds : { src: "/images/platformer/backgrounds/clouds.png"},
         space: { src: "/images/platformer/backgrounds/planet.jpg" },
         castles: { src: "/images/platformer/backgrounds/castles.png" },
+        building: { src: "/images/platformer/backgrounds/building.png" },
+        rainbow: { src: "/images/platformer/backgrounds/rainbowcolors.png" },
         loading: { src: "/images/platformer/backgrounds/greenscreen.png" },
         complete: { src: "/images/platformer/backgrounds/OneStar.png" },
         complete2: { src: "/images/platformer/backgrounds/TwoStar.png" },
+        bonus: { src: "/images/platformer/backgrounds/bonuschallenge.png" },
         end: { src: "/images/platformer/backgrounds/Congratulations!!!.png" }
       },
       players: {
@@ -266,6 +270,22 @@ const GameSetup = {
           width: 200,
           height: 180,
         },
+        squarey: {
+          src: "/images/platformer/sprites/squarey.png",
+          width: 1080,
+          height: 1080,
+          scaleSize: 120,
+          speedRatio: 0.9,
+          xPercentage: 0.6,
+        },
+        rainbowy: {
+          src: "/images/platformer/sprites/rainbowy.png",
+          width: 1080,
+          height: 1080,
+          scaleSize: 120,
+          speedRatio: 1.5,
+          xPercentage: 0.6,
+        },
       }
     },
 
@@ -303,14 +323,15 @@ const GameSetup = {
         var fun_facts = {
           //data structure
           "Fun Fact #1" : "Mario's full name is Mario Mario.", //key and value
-          "Fun Fact #2" : "Mario's least favorite food is shittake mushrooms.", //single quotes to include the double quotes
+          "Fun Fact #2" : "Mario's least favorite food is s**ttake mushrooms.", //single quotes to include the double quotes
           "Fun Fact #3" : "Mario, in human years, is 24-25 years old.",
           "Fun Fact #4" : "Mario's girlfriend's name is Pauline.",
           "Fun Fact #5" : "Call or text 929-55-MARIO (929-556-2746) to get a fun suprise!",
           "Fun Fact #6" : "Mario's original name was Jumpman.",
           "Fun Fact #7" : "March 10th is known as Mario Day because the abbreviation for March 10th (Mar10) looks like Mario.",
           "Fun Fact #8" : " Mario was originally a carpenter, not a plumber.",
-          "Fun Fact #9" : " There are actually lyrics to the Mario theme song."
+          "Fun Fact #9" : " There are actually lyrics to the Mario theme song.",
+          "Fun Fact #10" : " Justin Quach glitched the game on February 16th, 2024. He pleaded innocent >:(",
           }
         function generate(){
           var nums = Object.keys(fun_facts);
@@ -416,6 +437,30 @@ const GameSetup = {
         ];
         // Space Game Level added to the GameEnv ...
         new GameLevel( {tag: "space", callback: this.playerOffScreenCallBack, objects: spaceGameObjects} );
+        
+        // Cubers Game Level definition...
+        const cubersGameObjects = [
+          // GameObject(s), the order is important to z-index...
+          { name: 'rainbow', id: 'background', class: BackgroundClouds, data: this.assets.backgrounds.rainbow },
+          { name: 'building', id: 'background', class: BackgroundHills, data: this.assets.backgrounds.building },
+          { name: 'road', id: 'platform', class: Platform, data: this.assets.platforms.road },
+          { name: 'blocks', id: 'jumpPlatform', class: BlockPlatform, data: this.assets.platforms.block, xPercentage: 0.2, yPercentage: 0.85 },
+          { name: 'blocks', id: 'jumpPlatform', class: BlockPlatform, data: this.assets.platforms.block, xPercentage: 0.2368, yPercentage: 0.85 },
+          { name: 'blocks', id: 'jumpPlatform', class: BlockPlatform, data: this.assets.platforms.block, xPercentage: 0.5, yPercentage: 0.85 },
+          { name: 'blocks', id: 'jumpPlatform', class: BlockPlatform, data: this.assets.platforms.block, xPercentage: 0.5368, yPercentage: 0.85 },
+          { name: 'itemBlock', id: 'jumpPlatform', class: JumpPlatform, data: this.assets.platforms.itemBlock, xPercentage: 0.4, yPercentage: 0.65 }, //item block is a platform
+          { name: 'squarey', id: 'goomba', class: Goomba, data: this.assets.enemies.squarey, xPercentage: 0.3, minPosition: 0.05},
+          { name: 'squarey', id: 'goomba', class: Goomba, data: this.assets.enemies.squarey, xPercentage:  0.5, minPosition: 0.3 },
+          { name: 'mushroom', id: 'mushroom', class: Mushroom, data: this.assets.enemies.mushroom, xPercentage: 0.09},
+          { name: 'squareySpecial', id: 'squarey', class: Goomba, data: this.assets.enemies.squarey, xPercentage:  0.75, minPosition: 0.5 }, //this special name is used for random event 2 to make sure that only one of the Goombas ends the random event
+          { name: 'rainbowy', id: 'flyingGoomba', class: FlyingGoomba, data: this.assets.enemies.rainbowy, xPercentage:  0.5, minPosition:  0.05},
+          { name: 'rainbowy', id: 'flyingGoomba', class: FlyingGoomba, data: this.assets.enemies.rainbowy, xPercentage:  0.9, minPosition: 0.5},
+          { name: 'cubey', id: 'player', class: Player, data: this.assets.players.lopez },
+          { name: 'tube', id: 'tube', class: Tube, data: this.assets.obstacles.tube },
+          { name: 'bonus', id: 'background', class: BackgroundTransitions,  data: this.assets.backgrounds.bonus },
+          ];
+          // Cubers Game Level added to the GameEnv ...
+          new GameLevel( {tag: "cubers", callback: this.playerOffScreenCallBack, objects: cubersGameObjects } );
 
         // Game Over Level definition...
         const endGameObjects = [

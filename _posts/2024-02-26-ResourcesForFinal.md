@@ -26,6 +26,13 @@ Make your own level to the Multiplayer Platformer Game Level (Level 4).
 - Add you own unique game level: ie change backgrounds, objects, goomba, player sprite to your own interest (3 points, 90% scale)
 - Make sure you can run at least two other games that play in your blog, ie something from trimester 1 or early trimester 2 (1 point, 100% scale)
 
+### What I changed for Level 4:
+- Background
+- Background Transition
+- Original Enemies (Squarey, Rainbowy)
+- Platform/Ground
+- Player Sprite (Cubey) [WIP]
+
 <!-- from https://github.com/utterance/utterances -->
 <script src="https://utteranc.es/client.js"
         repo="{{ site.github_username }}/{{ site.github_repo | default: site.baseurl | remove: "/" }}"
